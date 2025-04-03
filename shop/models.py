@@ -8,15 +8,17 @@ class Size(models.Model):
         return self.size_code
 
 class Shoe(models.Model):
-    shoe_number = models.CharField(max_length=10, primary_key=True)  # e.g. SH001
+    shoe_number = models.CharField(max_length=10, primary_key=True)
     name = models.CharField(max_length=100)
     brand = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     release_date = models.DateField()
-    sizes = models.ManyToManyField(Size)
+    sizes = models.ManyToManyField('Size')
+    image = models.ImageField(upload_to='shoe_images/', null=True, blank=True)  # 👈 Add this line
 
     def __str__(self):
         return f"{self.name} ({self.brand})"
+
 
 class Order(models.Model):
     order_number = models.CharField(max_length=12, primary_key=True, editable=False)  # e.g. ORD0001
