@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class="p-3">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-6 mx-auto mb-3">
+        <h2>About</h2>
+        <hr />
+        <p>At SoleMate, we offer an extensive online catalog of shoes for users to purchase and a platform for shoe enthusiasts to
+            sell their shoes. No login required to use the basic features of this site. However, to receive all the fun perks and
+            features, you must create an account. To become a seller you need to apply for it.</p>
+        <p>Discover the next shoe for you!</p>
+      </div>
+      <div class="col-md-6 mx-auto mb-3 text-center">
+        <img src="{% static 'img/Blue_shoes.png' %}" class="max-width-100" alt="about" />
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
