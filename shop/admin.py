@@ -5,9 +5,9 @@ from .models import Shoe, Size, Order, OrderItem
 
 @admin.register(Shoe)
 class ShoeAdmin(admin.ModelAdmin):
-    list_display = ('shoe_number', 'name', 'brand', 'price', 'release_date')
+    list_display = ('shoe_number', 'name', 'brand', 'price', 'release_date', 'description')  # 👈 added
     search_fields = ('shoe_number', 'name', 'brand')
-    filter_horizontal = ('sizes',)  # Better UI for selecting sizes
+    filter_horizontal = ('sizes',)
 
 @admin.register(Size)
 class SizeAdmin(admin.ModelAdmin):
@@ -24,3 +24,9 @@ class OrderItemAdmin(admin.ModelAdmin):
     list_display = ('order', 'shoe', 'size', 'quantity')
     search_fields = ('order__order_number', 'shoe__shoe_number', 'size__size_code')
 
+from .models import Review
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('shoe', 'user', 'rating', 'created_at')
+    search_fields = ('shoe__shoe_number', 'user__username', 'comment')
