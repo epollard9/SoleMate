@@ -11,8 +11,8 @@
         <p><b>Price:</b> ${{ template_data.shoe.price }}</p>
       </div>
       <div class="col-md-6 mx-auto mb-3 text-center">
-        <img src="{% static 'img/Blue_shoes.png' %}"
-          class="rounded" />
+        <img src="{{ template_data.shoe.image.url}}"
+          class="rounded img-card-400" />
       </div>
     </div>
   </div>
