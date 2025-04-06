@@ -1,0 +1,35 @@
+Index: SoleMate/templates/base.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\n<html>\n  {% load static %}\n  <head>\n    <title>{{ template_data.title }}</title>\n    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\" crossorigin=\"anonymous\">\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css\">\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap\" rel=\"stylesheet\">\n    <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js\"crossorigin=\"anonymous\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"{% static 'css/style.css' %}\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  </head>\n\n  <body>\n    <!-- Header -->\n    <nav class=\"p-3 navbar navbar-dark bg-dark navbar-expand-lg\">\n      <div class=\"container\">\n         <a class=\"navbar-brand\" href=\"{% url 'home.index' %}\">\n          <img src=\"{% static 'img/logo.png' %}\" alt=\"logo\" height=\"40\" />\n        </a>\n        <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbarNavAltMarkup\"\n          aria-controls=\"navbarNavAltMarkup\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n          <span class=\"navbar-toggler-icon\"></span>\n        </button>\n        <div class=\"collapse navbar-collapse\" id=\"navbarNavAltMarkup\">\n          <div class=\"navbar-nav ms-auto navbar-ml\">\n            <a class=\"nav-link\" href=\"{% url 'home.about' %}\">About</a>\n            <a class=\"nav-link\" href=\"{% url 'home.news' %}\">News</a>\n            <a class=\"nav-link\" href=\"{% url 'shop.index' %}\">Shop</a>\n            <div class=\"vr bg-white mx-2 d-none d-lg-block\"></div>\n          </div>\n        </div>\n      </div>\n    </nav>\n    <!-- Header -->\n\n    <div>\n      {% block content %}\n      {% endblock content %}\n    </div>\n\n    <!-- Footer -->\n    <section class=\"p-3 ms-footer d-none d-md-block\">\n      <div class=\"container\">\n        <div class=\"row mt-3 text-white\">\n          <div class=\"col-md-6 col-lg-6 col-xl-6 mx-auto mb-4\">\n            <b>SoleMate</b>\n            <hr />\n            <p>Welcome to SoleMate, the online website where you are guaranteed to find your next favorite pair of shoes. Come\n              enjoy all the latest features and up to date selection that we host.\n            </p>\n          </div>\n          <div class=\"col-md-3 col-lg-3 col-xl-3 mx-auto mb-4\">\n            <b>LINKS</b>\n            <hr />\n            <p><a class=\"nav-link\" href=\"{% url 'home.about' %}\">About</a></p>\n            <p><a class=\"nav-link\" href=\"{% url 'home.news' %}\">News</a></p>\n            <p><a class=\"nav-link\" href=\"{% url 'shop.index' %}\">Shop</a></p>\n          </div>\n          <div class=\"col-md-3 col-lg-3 col-xl-3 mx-auto mb-4\">\n            <b>CONTACT</b>\n            <hr />\n            <p><i class=\"fas fa-home me-2\"></i> Atlanta, Georgia</p>\n            <p><i class=\"fas fa-envelope me-2\"></i> info@solemate.com/p>\n            <p><i class=\"fas fa-phone me-2\"></i> +81 03-3333-3333</p>\n          </div>\n        </div>\n      </div>\n    </section>\n    <section class=\"p-3 ms-footer-bottom bg-dark\">\n      <div class=\"container d-flex justify-content-between\">\n        <div class=\"me-5 text-white\">\n          <span>\n            Everett, Tanay, Amogh, Nimay\n          </span>\n        </div>\n        <div class=\"text-white\">\n          <span>© Copyright - 2025</span>\n        </div>\n      </div>\n    </section>\n    <!-- Footer -->\n  </body>\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SoleMate/templates/base.html b/SoleMate/templates/base.html
+--- a/SoleMate/templates/base.html	(revision 2610b6d0a643602003b4121b86ae755c1311a7d7)
++++ b/SoleMate/templates/base.html	(date 1743894155327)
+@@ -6,7 +6,7 @@
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous"></script>
++    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+     <meta name="viewport" content="width=device-width, initial-scale=1" />
+   </head>
+@@ -61,7 +61,7 @@
+             <b>CONTACT</b>
+             <hr />
+             <p><i class="fas fa-home me-2"></i> Atlanta, Georgia</p>
+-            <p><i class="fas fa-envelope me-2"></i> info@solemate.com/p>
++            <p><i class="fas fa-envelope me-2"></i> info@solemate.com</p>
+             <p><i class="fas fa-phone me-2"></i> +81 03-3333-3333</p>
+           </div>
+         </div>
+@@ -81,4 +81,4 @@
+     </section>
+     <!-- Footer -->
+   </body>
+-</html>
+\ No newline at end of file
++</html>
