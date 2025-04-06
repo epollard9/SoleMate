@@ -1,0 +1,19 @@
+{% extends 'base.html' %}% extends 'base.html' %}
+
+{% block content %}
+<div class="main-content">
+    <h1>Your Shopping Cart</h1>
+    {% if cart_items %}
+        <ul>
+        {% for item in cart_items %}
+            <li>
+                <strong>{{ item.name }}</strong> - ${{ item.price }}
+                <a href="{% url 'cart.remove' item.id %}">Remove</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}

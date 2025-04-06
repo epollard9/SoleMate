@@ -7,14 +7,35 @@
       <div class="col-md-6 mx-auto mb-3">
         <h2>{{ template_data.shoe.name }}</h2>
         <hr />
-        <p><b>Description:</b> {{ template_data.shoe.description }}</p>
-        <p><b>Price:</b> ${{ template_data.shoe.price }}</p>
+        <p><strong>Description:</strong> {{ template_data.shoe.description }}</p>
+        <p><strong>Price:</strong> ${{ template_data.shoe.price }}</p>
+        <a href="#" class="btn btn-primary add-to-cart" data-id="{{ template_data.shoe.id }}">Add to Cart</a>
       </div>
       <div class="col-md-6 mx-auto mb-3 text-center">
         <img src="{{ template_data.shoe.image.url}}"
           class="rounded img-card-400" />
       </div>
     </div>
+    <div id="cart-feedback" class="alert alert-success" style="display: none;">Added to cart!</div>
   </div>
 </div>
+
+<script>
+document.querySelector('.add-to-cart').addEventListener('click', function(event) {
+    event.preventDefault();
+    const shoeId = event.target.getAttribute('data-id');
+    fetch(`/cart/add/${shoeId}/`, {
+        method: 'GET',
+        credentials: 'same-origin'
+    }).then(response => {
+        if (response.ok) {
+            const feedback = document.getElementById('cart-feedback');
+            feedback.style.display = 'block';
+            setTimeout(() => {
+                feedback.style.display = 'none';
+            }, 2000);
+        }
+    }).catch(error => console.error('Error adding to cart:', error));
+});
+</script>
 {% endblock content %}
