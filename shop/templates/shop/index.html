@@ -1,48 +1,106 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-<div class="p-3">
+<style>
+  .container {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "menu content"
+    "footer footer";
+  grid-template-columns: 1fr 3fr;
+  gap: 5px;
+  background-color: #7F7F7F;
+  padding: 5px;
+}
+.container > div {
+  background-color: white;
+  padding: 10px;
+}
+.container > div.header {
+  background-color: #6ab43e;
+  grid-area: header;
+  text-align: center;
+}
+.container > div.menu {
+  grid-area: menu;
+}
+.container > div.content {
+  grid-area: content;
+}
+.container > div.footer {
+  background-color: #2E2E2E;
+  grid-area: footer;
+}
+</style>
   <div class="container">
-    <div class="row mt-3">
-      <div class="col mx-auto mb-3">
-        <h2>List of Shoes</h2>
-        <hr />
-        <p class="card-text">
-          <form method="GET">
+    <div class="menu">
+      <div class="row mt-3">
+        <div class="col mx-auto mb-3">
+          <h2>Products</h2>
+          <hr />
+          <p class="card-text">
+            <div>Size:</div>
+            <select class="form-select" name="sizeFilter" aria-label="Default select example">
+            <option selected>Select Size</option>>
+            {% for size in template_data.sizes %}
+            <option> {{size}} </option>
+            {% endfor %}
+            </select>
+            <div>Price:</div>
+            <select class="form-select" name="sizeFilter" aria-label="Default select example">
+            <option selected>Select Price Range</option>>
+              <option> $0-$20</option>>
+              <option> $20-$40</option>>
+              <option> $40-$60</option>>
+              <option> $60-$80</option>>
+              <option> $80-$100</option>>
+            </select>
+          <div>Brands</div>
+          {% for shoe in template_data.shoes %}
+            <div class="row">
+              <span>
+                <input type="checkbox" id={{shoe.brand}} name={{shoe.brand}} value={{shoe.brand}}> <label for={{shoe.brand}}> {{shoe.brand}}</label>
+              </span>
+            </div>{% endfor %}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class = "row">
+        <h2>Sizes</h2>
+        <form method="GET">
             <div class="row">
               <div class="col-auto">
                 <div class="input-group col-auto">
-                  <div class="input-group-text">
-                    Search</div>
-                  <input type="text" class="form-control"
-                    name="search">
-                </div>
-              </div>
-              <div class="col-auto">
-                <button class="btn bg-dark text-white"
-                  type="submit">Search</button>
+                  <div class="input-group-text">Search</div>
+                  <input type="text" class="form-control" name="search">
+                  </div>
+                  </div>
+                <div class="col-auto"><button class="btn bg-dark text-white" type="submit">Search</button>
               </div>
             </div>
-          </form>
-        </p>
-      </div>
-    </div>
-    <div class="row">
-      {% for shoe in template_data.shoes %}
-      <div class="col-md-4 col-lg-3 mb-2">
-        <div class="p-2 card align-items-center pt-4">
-          <img src="{{ shoe.image.url}}"
-            class="card-img-top rounded img-card-200">
-          <div class="card-body text-center">
-              <a href="{% url 'shop.show' id=shoe.shoe_number %}"
-              class="btn bg-dark text-white">
-                {{ shoe.name }}
-              </a>
+        </form>
+        {% for shoe in template_data.shoes %}
+        <div class="col-md-4 col-lg-3 mb-2">
+          <div class="p-2 card align-items-center pt-4">
+            <img src="{{shoe.image.url}}" class="card-img-top rounded img-card-200" width="75px" height="75px">
+            <div>
+              {{shoe.description}}
+            </div>
+            <div style="text-align:left"> Sizes:</div>
+            {% for size in template_data.sizes %} {{size}} {% endfor %}
+            <div class="card-body text-center">
+              <a href="{% url 'shop.show' id=shoe.shoe_number %}" class="btn bg-dark text-white"> {{ shoe.name }} </a>
+            </div>
           </div>
         </div>
+        {% endfor %}
       </div>
-      {% endfor %}
     </div>
   </div>
-</div>
-{% endblock content %}
+  <div style="flex-grow:1"></div>
+<footer>
+<div class = "footer"> {% endblock content %} </div>
+</footer>
