@@ -12,7 +12,8 @@
         <a href="#" class="btn btn-primary add-to-cart" data-id="{{ template_data.shoe.id }}">Add to Cart</a>
       </div>
       <div class="col-md-6 mx-auto mb-3 text-center">
-        <img src="{% static 'img/Blue_shoes.png' %}" class="max-width-100" alt="shoe" />
+        <img src="{{ template_data.shoe.image.url}}"
+          class="rounded img-card-400" />
       </div>
     </div>
     <div id="cart-feedback" class="alert alert-success" style="display: none;">Added to cart!</div>

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from shop.views import shoes
+from shop.models import Shoe
 
 def add_to_cart(request, id):
     cart = request.session.get('cart', [])
@@ -17,5 +17,6 @@ def remove_from_cart(request, id):
 
 def view_cart(request):
     cart = request.session.get('cart', [])
-    cart_items = [shoe for shoe in shoes if shoe['id'] in cart]
+    shoes = Shoe.objects.all()
+    cart_items = [shoe for shoe in shoes if shoe in cart]
     return render(request, 'cart/cart.html', {'cart_items': cart_items})
