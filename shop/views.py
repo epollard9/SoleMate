@@ -1,7 +1,28 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Shoe, Size, Review
 from django.contrib.auth.decorators import login_required
+
 # Create your views here.
+import urllib.request
+import urllib.parse
+import json
+
+YOUTUBE_API_KEY = "AIzaSyBux6v-ckL2RSwBdJjFbrixoeFcrwDK4jQ"
+
+def get_youtube_review_video(shoe_name):
+    query = urllib.parse.quote(f"{shoe_name} review")
+    url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q={query}&key={YOUTUBE_API_KEY}&type=video"
+
+    try:
+        with urllib.request.urlopen(url) as response:
+            data = json.loads(response.read().decode())
+            if data.get("items"):
+                video_id = data["items"][0]["id"]["videoId"]
+                return f"https://www.youtube.com/embed/{video_id}"
+    except Exception as e:
+        print(f"Error fetching YouTube video: {e}")
+    return None
+
 def index(request):
     search_term = request.GET.get('search')
     if search_term:
@@ -16,15 +37,21 @@ def index(request):
                   {'template_data': template_data})
 
 def show(request, id):
-    shoe = Shoe.objects.get(shoe_number=id)
+    shoe = get_object_or_404(Shoe, shoe_number=id)
     reviews = Review.objects.filter(shoe=shoe)
-    template_data = {}
-    template_data['title'] = shoe.name
-    template_data['shoe'] = shoe
-    template_data['sizes'] = Size.objects.all()
-    template_data['reviews'] = reviews
-    return render(request, 'shop/show.html',
-                  {'template_data': template_data})
+
+
+    video_url = get_youtube_review_video(shoe.name)
+
+    template_data = {
+        'title': shoe.name,
+        'shoe': shoe,
+        'sizes': Size.objects.all(),
+        'reviews': reviews,
+        'youtube_video_url': video_url,
+    }
+    return render(request, 'shop/show.html', {'template_data': template_data})
+
 
 
 @login_required
