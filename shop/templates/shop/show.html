@@ -1,22 +1,83 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+<style xmlns="http://www.w3.org/1999/html">
+#id_shoe_size{
+  height: 44px;
+  border: none;
+  overflow: hidden;
+}
+#id_shoe_size::-moz-focus-inner {
+  border: 0;
+}
+#id_shoe_size:focus {
+  outline: none;
+}
+#id_shoe_size option{
+  width: 60px;
+  height: 40px;
+  font-size: 1.2em;
+  padding: 5px 0;
+  text-align: center;
+  margin-right: 20px;
+  display: inline-block;
+  cursor: pointer;
+  border: black solid 1px;
+  border-radius: 5px;
+  color: black;
+}
+
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #ccc;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+</style>
 <div class="p-3">
-  <div class="container">
+  <div class="container" style ="max-height: 100vh; overflow-y: scroll">
     <div class="row mt-3">
-      <div class="col-md-6 mx-auto mb-3">
-        <h2>{{ template_data.shoe.name }}</h2>
+      <div class="col-md-6  mb-3" style="padding-right:5px !important;">
+        <img style="padding-right: 10px;" src="{{ template_data.shoe.image.url}}" class="rounded img-card-400" />
+      </div>
+      <div class="col-md-6 mx-auto mb-3 content2">
+        <h2 style="padding-top: 10px">{{ template_data.shoe.name }}</h2>
+        <p style="padding-top: 2px">${{ template_data.shoe.price }}</p>
         <hr />
+        <h6>Select Size:</h6>
+        <div class="row" style="padding: 5px;text-align: center">
+          <select name="shoe_size" id="id_shoe_size" multiple>
+          {% for shoe_size in template_data.shoe.sizes.all%}
+          <option value="{{shoe_size}}">{{shoe_size}}</option>
+          {% endfor %}
+          </select>
+        </div>
         <p><strong>Description:</strong> {{ template_data.shoe.description }}</p>
-        <p><strong>Price:</strong> ${{ template_data.shoe.price }}</p>
-        <a href="#" class="btn btn-primary add-to-cart" data-id="{{ template_data.shoe.shoe_number }}">Add to Cart</a>
-        <h2>Reviews</h2>
+        <a href="#" class="btn add-to-cart" style="background-color: #CBCBCB;" data-id="{{ template_data.shoe.shoe_number }}">Add to Cart</a>
+        <button type="button" id="review-btn" class="collapsible" style="padding-top:15px; background-color: white; font-size: larger; padding-left: 0px !important;" onclick="openCollapse()"><strong>Reviews v</strong></button>
         <hr />
-        <ul class="list-group">
+        <ul class="list-group content" id="hidden" style="background-color: white">
           {% for review in template_data.reviews %}
-          <li class="list-group-item pb-3 pt-3">
+          <li class="list-group-item pb-3 pt-3" style="background-color: white">
             <h5 class="card-title">
-              Review by {{ review.user.username }}
+              {{review.rating}}/5 Review by {{ review.user.username }} {{review.date}}
             </h5>
             <h6 class="card-subtitle mb-2 text-muted">
               {{ review.date }}
@@ -63,8 +124,6 @@
         </div>
         {% endif %}
       </div>
-      <div class="col-md-6 mx-auto mb-3 text-center"> <img src="{{ template_data.shoe.image.url}}" class="rounded img-card-400" /></div>
-
     </div>
     <div id="cart-feedback" class="alert alert-success" style="display: none;">Added to cart!</div>
   </div>
@@ -76,6 +135,19 @@
 
 
 <script>
+  var clicked = 0;
+  function openCollapse(){
+    if (clicked == 0) {
+      document.getElementById("hidden").style.display = "block";
+      document.getElementById("review-btn").innerHTML = '<strong>Reviews ^</strong>';
+      clicked = 1;
+    } else {
+      document.getElementById("hidden").style.display = "none";
+      document.getElementById("review-btn").innerHTML = '<strong>Reviews v</strong>';
+      clicked = 0;
+    }
+
+  }
 document.querySelector('.add-to-cart').addEventListener('click', function(event) {
     event.preventDefault();
     const shoeId = event.target.getAttribute('data-id');
@@ -92,5 +164,6 @@ document.querySelector('.add-to-cart').addEventListener('click', function(event)
         }
     }).catch(error => console.error('Error adding to cart:', error));
 });
+
 </script>
 {% endblock content %}

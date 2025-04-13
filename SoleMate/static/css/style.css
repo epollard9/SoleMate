@@ -3,10 +3,10 @@
   background-size: 100% auto;
 }
 .navbar a.nav-link {
-  color: #FFFEF6 !important;
+  color: black !important;
 }
 .bg-dark {
-  background-color: #2E2E2E !important;
+  background-color: #EDEDED !important;
 }
 .ms-footer {
   margin-top: auto;
@@ -34,8 +34,9 @@
 }
 
 .img-card-200 {
+  padding:0px;
   width: fit-content;
-  max-height: 200px;
+  height: 125px;
 }
 
 .img-card-400 {
@@ -44,21 +45,44 @@
 }
 
 .flex-wrapper {
-  min-height: 100vh !important;
+  min-height: 50vh !important;
   flex-direction: column;
   justify-content: flex-start;
 }
 .body {
-  min-height: 100vh;
+  min-height: 50vh;
   display: flex;
   flex-direction: column;
 }
 
 .footer {
   margin-top: auto;
-  height: 100vh !important;
+  max-height: 25vh !important;
 }
 
 .mainBody {
-  min-height: 100vh;
+  min-height: 50vh;
+}
+
+.banner {
+  font-size: 40px;
+  color: black;
+  padding-left: 10px !important;
+}
+.card-img-top {
+    max-width: 225px;
+    min-width: 150px;
+    object-fit: cover;
+  padding: 0px !important;
+}
+
+.size-btn {
+  background-color: #EDEDED !important;
+  font-size: 15px !important;
+}
+.add-to-cart-btn {
+  border-radius: 50%;
+  width: 100px;
+  background-color: black !important;
+
 }
