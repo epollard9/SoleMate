@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a5335e4d-c2a5-4523-8f14-20649ac38fba" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/SoleMate.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SoleMate.iml" afterDir="false" />
+    <list default="true" id="a5335e4d-c2a5-4523-8f14-20649ac38fba" name="Changes" comment="youtube">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/templates/shop/show.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/show.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/shop/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,8 +101,18 @@
       <workItem from="1743103190084" duration="322000" />
       <workItem from="1743884891627" duration="8670000" />
       <workItem from="1744147244408" duration="1013000" />
-      <workItem from="1744479391177" duration="2112000" />
+      <workItem from="1744479391177" duration="3087000" />
+      <workItem from="1744492698510" duration="300000" />
     </task>
+    <task id="LOCAL-00001" summary="youtube">
+      <option name="closed" value="true" />
+      <created>1744491837887</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1744491837887</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,5 +128,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="youtube" />
+    <option name="LAST_COMMIT_MESSAGE" value="youtube" />
   </component>
 </project>
