@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     'shop',
     'cart',
     'accounts',
+    'aihelper',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +136,7 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# At the top
+OPENAI_API_KEY = "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"
+OPENAI_API_BASE = "https://openrouter.ai/api/v1"

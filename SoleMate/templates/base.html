@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
-  {% load static %}
-  <div class = "flex-wrapper mainBody">
+{% load static %}
+<div class="flex-wrapper mainBody">
   <head>
     <title>{{ template_data.title }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
 
-  <body class = "body">
+  <body class="body">
     <!-- Header -->
     <nav class="p-3 navbar navbar-dark bg-light navbar-expand-lg">
       <div class="container">
-         <a class="navbar-brand" href="{% url 'home.index' %}">
+        <a class="navbar-brand" href="{% url 'home.index' %}">
           <img src="{% static 'img/logo.png' %}" alt="logo" height="40" />
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -29,42 +29,78 @@
             <a class="nav-link bg-dark" href="{% url 'home.news' %}">News</a>
             <a class="nav-link bg-dark" href="{% url 'shop.index' %}">Shop</a>
             <a class="nav-link bg-dark" href="{% url 'cart.view_cart' %}">Cart</a>
-            <div class="vr bg-light mx-2 d-none
-            d-lg-block"></div>
+            <div class="vr bg-light mx-2 d-none d-lg-block"></div>
             {% if user.is_authenticated %}
-            <a class="nav-link bg-dark"
-              href="{% url 'accounts.logout' %}">Logout ({{
-              user.username }})</a>
+              <a class="nav-link bg-dark" href="{% url 'accounts.logout' %}">Logout ({{ user.username }})</a>
             {% else %}
-            <a class="nav-link bg-dark"
-              href="{% url 'accounts.login' %}">Login</a>
-            <a class="nav-link bg-dark"
-              href="{% url 'accounts.signup' %}">
-              Sign Up
-            </a>
+              <a class="nav-link bg-dark" href="{% url 'accounts.login' %}">Login</a>
+              <a class="nav-link bg-dark" href="{% url 'accounts.signup' %}">Sign Up</a>
             {% endif %}
             <div class="vr bg-white mx-2 d-none d-lg-block"></div>
           </div>
         </div>
       </div>
     </nav>
-    <!-- Header -->
+
+
 
     <div>
       {% block content %}
       {% endblock content %}
     </div>
 
-    <!-- Footer -->
+    <!--ai-->
+    <div class="card p-3 m-5 shadow rounded">
+      <h4 class="text-center">Ask Sole-Mate</h4>
+      <textarea id="ai-input" class="form-control mb-2" rows="2" placeholder="Hi I am Sole-Mate, how can I assist you?"></textarea>
+      <div class="text-center">
+        <button class="btn bg-dark text-white" onclick="sendAIRequest()">Ask</button>
+      </div>
+      <div id="ai-response" class="mt-3 border rounded p-2 text-dark bg-light" style="min-height: 50px;"></div>
+    </div>
+
+    <script>
+      async function sendAIRequest() {
+        const input = document.getElementById("ai-input").value;
+        const responseDiv = document.getElementById("ai-response");
+
+        responseDiv.innerHTML = "Thinking...";
+
+        try {
+          const res = await fetch("/ai/chat/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({ prompt: input })
+          });
+
+          const data = await res.json();
+
+          if (data.response) {
+            responseDiv.innerHTML = "<strong>SOLE-MATE:</strong> " + data.response;
+          } else if (data.error) {
+            const errorText = typeof data.error === "object" ? JSON.stringify(data.error) : data.error;
+            responseDiv.innerHTML = "<strong>Error:</strong> " + errorText;
+          } else {
+            responseDiv.innerHTML = "Unexpected error occurred.";
+          }
+
+        } catch (error) {
+          responseDiv.innerHTML = "<strong>Request failed:</strong> " + error;
+        }
+      }
+    </script>
+
     <footer class="footer">
-    <section class="p-3 ms-footer-bottom bg-dark">
-      <div class="row mt-3 text-white">
+      <section class="p-3 ms-footer-bottom bg-dark">
+        <div class="row mt-3 text-white">
           <div class="col-md-6 col-lg-6 col-xl-6 mx-auto mb-4">
             <b>SoleMate</b>
             <hr />
             <p>Welcome to SoleMate, the online website where you are guaranteed to find your next favorite pair of shoes. Come
-              enjoy all the latest features and up to date selection that we host.
-            </p>
+              enjoy all the latest features and up to date selection that we host.</p>
           </div>
           <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
             <b>LINKS</b>
@@ -77,13 +113,12 @@
             <b>CONTACT</b>
             <hr />
             <p><i class="fas fa-home me-2"></i> Atlanta, Georgia</p>
-            <p><i class="fas fa-envelope me-2"></i> info@solemate.com/p>
+            <p><i class="fas fa-envelope me-2"></i> info@solemate.com</p>
             <p><i class="fas fa-phone me-2"></i> +81 03-3333-3333</p>
           </div>
         </div>
-    </section>
+      </section>
     </footer>
-    <!-- Footer -->
   </body>
-  </div>
+</div>
 </html>
