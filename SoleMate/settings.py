@@ -137,6 +137,6 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# At the top
+
 OPENAI_API_KEY = "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"
 OPENAI_API_BASE = "https://openrouter.ai/api/v1"

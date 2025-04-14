@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5335e4d-c2a5-4523-8f14-20649ac38fba" name="Changes" comment="youtube">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_5_25,_7_02 PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_5_25,_7_03 PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_5_25__7_02PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_5_25__7_03PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SoleMate/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SoleMate/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SoleMate/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aihelper/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/aihelper/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +107,7 @@
       <workItem from="1744479391177" duration="3087000" />
       <workItem from="1744492698510" duration="300000" />
       <workItem from="1744605370733" duration="33000" />
-      <workItem from="1744605408802" duration="6203000" />
+      <workItem from="1744605408802" duration="9353000" />
     </task>
     <task id="LOCAL-00001" summary="youtube">
       <option name="closed" value="true" />
@@ -123,7 +117,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744491837887</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="youtube">
+      <option name="closed" value="true" />
+      <created>1744647414560</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1744647414560</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

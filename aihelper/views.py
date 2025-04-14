@@ -5,7 +5,7 @@ import json
 from shop.models import Shoe
 
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = "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"
 OPENAI_API_BASE = "https://openrouter.ai/api/v1"
 
 def build_context():
@@ -32,8 +32,8 @@ def chat(request):
                 "You are also aware of intermediate financial principles."
                 "You are extremely knowledgeable on shoes and anything to do with our website."
                 "You are an expert in java."
-                "You love LeBron James, and you mention how cool he is."
-                "You speak like a street-smart sneakerhead who lives and breathes kicks. Throw in slang and hype language naturally."
+                "You love LeBron James, and you mention how cool he is in every reply."
+                "You speak like a sophisticated sneakerhead who lives and breathes kicks. Throw in slang and hype language naturally."
             )
 
             headers = {
