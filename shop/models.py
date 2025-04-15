@@ -7,6 +7,10 @@ class Size(models.Model):
     def __str__(self):
         return self.size_code
 
+
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+
 class Shoe(models.Model):
     shoe_number = models.CharField(max_length=10, primary_key=True)
     name = models.CharField(max_length=100)
@@ -15,11 +19,22 @@ class Shoe(models.Model):
     release_date = models.DateField()
     sizes = models.ManyToManyField('Size')
     image = models.ImageField(upload_to='shoe_images/', null=True, blank=True)
-    description = models.TextField(blank=True, null=True)  # 👈 NEW FIELD
+    description = models.TextField(blank=True, null=True)
+
+    discount = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=0.00,
+        validators=[MinValueValidator(0.00), MaxValueValidator(100.00)],
+        help_text="Discount as a percentage (e.g., 10.00 for 10%)"
+    )
 
     def __str__(self):
         return f"{self.name} ({self.brand})"
 
+    @property
+    def discounted_price(self):
+        return self.price * (1 - self.discount / 100)
 
 class Order(models.Model):
     order_number = models.CharField(max_length=12, primary_key=True, editable=False)  # e.g. ORD0001

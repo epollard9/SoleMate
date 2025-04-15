@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-{% load static %}
-<div class="flex-wrapper mainBody">
+  {% load static %}
+  <div class = "flex-wrapper">
   <head>
     <title>{{ template_data.title }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -12,39 +12,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
 
-  <body class="body">
+  <body class = "body" style="min-height: 50vh !important; max-height:60vh !important; display: block !important;height: 100% !important;overflow-y: hidden">
     <!-- Header -->
-    <nav class="p-3 navbar navbar-dark bg-light navbar-expand-lg">
+    <nav class="p-3 navbar navbar-dark bg-dark navbar-expand-lg" style="max-height:50px !important;">
       <div class="container">
-        <a class="navbar-brand" href="{% url 'home.index' %}">
+         <a class="navbar-brand" href="{% url 'home.index' %}">
           <img src="{% static 'img/logo.png' %}" alt="logo" height="40" />
         </a>
+        <div class="banner"> SoleMate</div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto navbar-ml">
-            <a class="nav-link bg-dark" href="{% url 'home.about' %}">About</a>
+            <a class="nav-link" href="{% url 'home.about' %}">About</a>
             <a class="nav-link bg-dark" href="{% url 'home.news' %}">News</a>
             <a class="nav-link bg-dark" href="{% url 'shop.index' %}">Shop</a>
             <a class="nav-link bg-dark" href="{% url 'cart.view_cart' %}">Cart</a>
-            <div class="vr bg-light mx-2 d-none d-lg-block"></div>
+            <div class="vr bg-light mx-2 d-none
+            d-lg-block"></div>
             {% if user.is_authenticated %}
-              <a class="nav-link bg-dark" href="{% url 'accounts.logout' %}">Logout ({{ user.username }})</a>
+            <a class="nav-link bg-dark"
+              href="{% url 'accounts.logout' %}">Logout ({{
+              user.username }})</a>
             {% else %}
-              <a class="nav-link bg-dark" href="{% url 'accounts.login' %}">Login</a>
-              <a class="nav-link bg-dark" href="{% url 'accounts.signup' %}">Sign Up</a>
+            <a class="nav-link bg-dark"
+              href="{% url 'accounts.login' %}">Login</a>
+            <a class="nav-link bg-dark"
+              href="{% url 'accounts.signup' %}">
+              Sign Up
+            </a>
             {% endif %}
             <div class="vr bg-white mx-2 d-none d-lg-block"></div>
           </div>
         </div>
       </div>
     </nav>
+    <!-- Header -->
 
+    <div style="max-height: 50vh !important;">
+      {% block hero %}
+      {% endblock hero %}
 
-
-    <div>
       {% block content %}
       {% endblock content %}
     </div>
@@ -92,7 +102,7 @@
         }
       }
     </script>
-
+    <!--
     <footer class="footer">
       <section class="p-3 ms-footer-bottom bg-dark">
         <div class="row mt-3 text-white">
@@ -119,6 +129,8 @@
         </div>
       </section>
     </footer>
+    -->
+    <!-- Footer -->
   </body>
 </div>
 </html>

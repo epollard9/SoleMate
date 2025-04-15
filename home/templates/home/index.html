@@ -1,18 +1,41 @@
 {% extends 'base.html' %}
-{% block content %}
-<header class="masthead text-black text-center py-4">
-  <div class="container d-flex align-items-center flex-column pt-2">
-    <h2>SoleMate</h2>
-    <p>Where to find the most popular shoes</p>
-  </div>
-</header>
-<div class="p-3">
-  <div class="container">
-    <div class="row mt-3">
-      <div class="col mx-auto text-center mb-3">
-        <h4>Welcome to the best and most comprehensive shoe store there is!</h4>
+{% load static %}
+
+{% block hero %}
+<!-- Hero Section with Carousel Background -->
+<div class="hero-container position-relative">
+  <!-- Carousel Background -->
+  <div id="heroCarousel" class="carousel slide carousel-fade position-absolute w-100 h-100 top-0 start-0" data-bs-ride="carousel" style="z-index: 0;">
+    <div class="carousel-inner h-100">
+
+      <!-- Slide 1 -->
+      <div class="carousel-item active h-100">
+        <div class="hero-slide h-100" style='background-image: url("{% static "img/guy-background.jpg" %}");'></div>
       </div>
+
+      <!-- Slide 2 -->
+      <div class="carousel-item h-100">
+        <div class="hero-slide h-100" style='background-image: url("{% static "img/nike-glow-shoes.jpg" %}");'></div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="carousel-item h-100">
+        <div class="hero-slide h-100" style='background-image: url("{% static "img/blue-nike.jpg" %}");'></div>
+      </div>
+
     </div>
   </div>
+
+  <!-- Overlay Text Content -->
+  <div class="hero-text-overlay position-relative z-1 text-center text-white py-5">
+    <h1>SoleMate</h1>
+    <p>Where to find the most popular shoes</p>
+    <h4>Welcome to the best and most comprehensive shoe store there is!</h4>
+    <a href="{% url 'shop.index' %}" class="shop-now-btn mt-4 d-inline-block">Shop Now</a>
+  </div>
 </div>
+{% endblock hero %}
+
+{% block content %}
+<!-- If you want more content below the hero -->
 {% endblock content %}

@@ -5,12 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5335e4d-c2a5-4523-8f14-20649ac38fba" name="Changes" comment="ai">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SoleMate/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SoleMate/static/Img/blue-nike.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SoleMate/static/Img/guy-background.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SoleMate/static/Img/nike-glow-shoes.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoleMate/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/static/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SoleMate/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aihelper/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/aihelper/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoleMate/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/templates/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/home/templates/home/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/shop/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/show.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/show.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +77,7 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "#11 on ai",
+    "git-widget-placeholder": "#11 on Merging ai",
     "last_opened_file_path": "/Users/veganboy/PycharmProjects/SoleMate",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
