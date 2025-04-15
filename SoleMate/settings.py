@@ -138,5 +138,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = "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"
 OPENAI_API_BASE = "https://openrouter.ai/api/v1"

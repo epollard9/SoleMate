@@ -1,12 +1,9 @@
 import requests
+import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import json
+from django.conf import settings
 from shop.models import Shoe
-
-
-OPENAI_API_KEY = "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"
-OPENAI_API_BASE = "https://openrouter.ai/api/v1"
 
 def build_context():
     shoes = Shoe.objects.all()
@@ -21,52 +18,48 @@ def chat(request):
         data = json.loads(request.body)
         prompt = data.get("prompt", "")
 
-        try:
-            shoe_context = build_context()
-            system_prompt = (
-                "You are Sole-Mate, a helpful, friendly assistant for an online sneaker store.\n"
-                "Here is our current shoe inventory:\n"
-                f"{shoe_context}\n"
-                "You can answer questions about shoes, help find styles, suggest discounts, and chat casually."
-                "You can also handle intense math calculations, such as multiplication, division, addition and subtraction, as well as calculus and physics."
-                "You are also aware of intermediate financial principles."
-                "You are extremely knowledgeable on shoes and anything to do with our website."
-                "You are an expert in java."
-                "You love LeBron James, and you mention how cool he is in every reply."
-                "You speak like a sophisticated sneakerhead who lives and breathes kicks. Throw in slang and hype language naturally."
-            )
+        shoe_context = build_context()
+        system_prompt = (
+            "You are Sole-Mate, a helpful, friendly assistant for an online sneaker store.\n"
+            "Here is our current shoe inventory:\n"
+            f"{shoe_context}\n"
+            "You can answer questions about shoes, help find styles, suggest discounts, and chat casually."
+            "You can also handle intense math calculations, such as multiplication, division, addition and subtraction, as well as calculus and physics."
+            "You are also aware of intermediate financial principles."
+            "You are extremely knowledgeable on shoes and anything to do with our website."
+            "You are an expert in java."
+            "You love LeBron James, and you mention how cool he is in every reply."
+            "You speak like a sophisticated sneakerhead who lives and breathes kicks. Throw in slang and hype language naturally."
+        )
 
-            headers = {
-                "Authorization": f"Bearer {OPENAI_API_KEY}",
-                "Content-Type": "application/json",
-            }
+        headers = {
+            "Authorization": f"Bearer {settings.OPENAI_API_KEY}",
+            "Content-Type": "application/json",
+        }
 
-            payload = {
-                "model": "openai/gpt-3.5-turbo",
-                "messages": [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": prompt}
-                ],
-                "temperature": 0.7,
-                "max_tokens": 250
-            }
+        payload = {
+            "model": "openai/gpt-3.5-turbo",
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": prompt}
+            ],
+            "temperature": 0.7,
+            "max_tokens": 250
+        }
 
-            response = requests.post(
-                f"{OPENAI_API_BASE}/chat/completions",
-                headers=headers,
-                json=payload
-            )
+        response = requests.post(
+            f"{settings.OPENAI_API_BASE}/chat/completions",
+            headers=headers,
+            json=payload
+        )
 
-            result = response.json()
+        result = response.json()
 
-            if response.status_code == 200:
-                answer = result["choices"][0]["message"]["content"].strip()
-                return JsonResponse({"response": answer})
-            else:
-                error_msg = result.get("error", result)
-                return JsonResponse({"error": error_msg}, status=response.status_code)
-
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=500)
+        if response.status_code == 200:
+            answer = result["choices"][0]["message"]["content"].strip()
+            return JsonResponse({"response": answer})
+        else:
+            error_msg = result.get("error", result)
+            return JsonResponse({"error": error_msg}, status=response.status_code)
 
     return JsonResponse({"error": "Only POST method allowed"}, status=405)
