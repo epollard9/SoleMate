@@ -9,13 +9,10 @@
     "menu content"
     "footer footer";
   grid-template-columns: 1fr 3fr;
-  gap: 5px;
-  background-color: #7F7F7F;
-  padding: 5px;
+  padding: 2px;
 }
 .container > div {
-  background-color: white;
-  padding: 10px;
+  padding: 0px;
 }
 .container > div.header {
   background-color: #6ab43e;
@@ -24,20 +21,24 @@
 }
 .container > div.menu {
   grid-area: menu;
+  border-right: 2px solid black;
+  min-height: 66vh;
 }
 .container > div.content {
   grid-area: content;
+  padding-top: 30px !important;
 }
 .container > div.footer {
   background-color: #2E2E2E;
   grid-area: footer;
 }
+
 </style>
   <div class="container">
     <div class="menu">
       <div class="row mt-3">
         <div class="col mx-auto mb-3">
-          <h2>Products</h2>
+          <h2>Filters</h2>
           <hr />
           <p class="card-text">
             <div>Size:</div>
@@ -67,32 +68,28 @@
         </div>
       </div>
     </div>
-    <div class="content">
+    <div class="content" style=" min-height:70vh; max-height:100vh; overflow-y: scroll !important; overflow-x:hidden; padding-left: 10px !important; padding-right: 10px !important;" >
       <div class = "row">
-        <h2>Sizes</h2>
+        <h2>Shoes</h2>
         <form method="GET">
-            <div class="row">
+            <div class="row" style="padding-bottom: 15px;">
               <div class="col-auto">
                 <div class="input-group col-auto">
                   <div class="input-group-text">Search</div>
                   <input type="text" class="form-control" name="search">
                   </div>
                   </div>
-                <div class="col-auto"><button class="btn bg-dark text-white" type="submit">Search</button>
+                <div class="col-auto"><button class="btn bg-dark text-black" type="submit">Search</button>
               </div>
             </div>
         </form>
         {% for shoe in template_data.shoes %}
-        <div class="col-md-4 col-lg-3 mb-2">
-          <div class="p-2 card align-items-center pt-4">
-            <img src="{{shoe.image.url}}" class="card-img-top rounded img-card-200" width="75px" height="75px">
-            <div>
-              {{shoe.description}}
-            </div>
-            <div style="text-align:left"> Sizes:</div>
-            {% for size in template_data.sizes %} {{size}} {% endfor %}
-            <div class="card-body text-center">
-              <a href="{% url 'shop.show' id=shoe.shoe_number %}" class="btn bg-dark text-white"> {{ shoe.name }} </a>
+        <div class="col-md-4 col-lg-3" style="padding: 10px">
+          <div class="card align-items-center pt-4" style="padding-top:0px !important; text-align: left !important; padding-bottom: 0px !important;">
+            <img src="{{shoe.image.url}}" class="card-img-top" style="width: fit-content; height: 20vh;">
+            <div class="card-body" style="padding-bottom: 0px; margin-left: 2px">
+              <p class="card-title" style="padding-left: 5px;"> {{shoe.name}} </p>
+              <a style="width:225px" href="{% url 'shop.show' id=shoe.shoe_number %}" class="btn bg-dark "> {{ shoe.name }} </a>
             </div>
           </div>
         </div>
@@ -100,7 +97,4 @@
       </div>
     </div>
   </div>
-  <div style="flex-grow:1"></div>
-<footer>
-<div class = "footer"> {% endblock content %} </div>
-</footer>
+{% endblock content %}
