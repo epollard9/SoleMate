@@ -26,7 +26,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto navbar-ml">
-            <a class="nav-link bg-dark" style="color:black" href="{% url 'home.about' %}">About</a>
+            <a class="nav-link" href="{% url 'home.about' %}">About</a>
             <a class="nav-link bg-dark" href="{% url 'home.news' %}">News</a>
             <a class="nav-link bg-dark" href="{% url 'shop.index' %}">Shop</a>
             <a class="nav-link bg-dark" href="{% url 'cart.view_cart' %}">Cart</a>
@@ -50,8 +50,12 @@
       </div>
     </nav>
     <!-- Header -->
+    
 
     <div style="max-height: 50vh !important;">
+      {% block hero %}
+      {% endblock hero %}
+
       {% block content %}
       {% endblock content %}
     </div>

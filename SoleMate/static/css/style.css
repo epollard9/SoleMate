@@ -1,10 +1,19 @@
+
+
 .bg-index{
   color: #FFFEF6;
   background-size: 100% auto;
 }
 .navbar a.nav-link {
   color: black !important;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
 }
+.navbar-nav .nav-link:hover {
+  color: #f0c14b; /* You can change this to a brand color */
+  transform: scale(1.2);
+}
+
 .bg-dark {
   background-color: #EDEDED !important;
 }
@@ -86,3 +95,68 @@
   background-color: black !important;
 
 }
+
+/* Ensure the carousel starts below the fixed navbar */
+.hero-container {
+  position: relative;
+  height: calc(100vh - 60px); /* Adjust based on your navbar height */
+  margin-top: 60px; /* Push it below the navbar */
+  overflow: hidden;
+  z-index: 0;
+}
+
+.carousel,
+.carousel-inner,
+.hero-slide {
+  height: 100%;
+}
+
+.hero-slide {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-text-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 1rem;
+  max-width: 700px;
+}
+
+.hero-text-overlay h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  text-shadow: 1px 1px 5px black;
+}
+
+.hero-text-overlay p {
+  font-size: 1.25rem;
+  font-weight: 300;
+  text-shadow: 1px 1px 3px black;
+}
+
+.hero-text-overlay a {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 999px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 1rem;
+  transition: transform 0.2s ease;
+}
+
+
+
+

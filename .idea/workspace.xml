@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5335e4d-c2a5-4523-8f14-20649ac38fba" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/SoleMate.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SoleMate.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/home/templates/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/home/templates/home/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/show.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/show.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/shop/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +53,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/epollard9/SoleMate.git&quot;,
-    &quot;accountId&quot;: &quot;d94aa2ac-6117-433c-a3ab-77d194d6643e&quot;
+    &quot;accountId&quot;: &quot;971a48c2-e65f-49f6-973e-624b7cdab2cb&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -68,7 +70,7 @@
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;cart&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;youtube&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/veganboy/PycharmProjects/SoleMate&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -101,6 +103,8 @@
       <updated>1743103188909</updated>
       <workItem from="1743103190084" duration="322000" />
       <workItem from="1743884891627" duration="8670000" />
+      <workItem from="1744147244408" duration="1013000" />
+      <workItem from="1744479391177" duration="2112000" />
     </task>
     <servers />
   </component>
