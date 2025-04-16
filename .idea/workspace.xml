@@ -5,17 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5335e4d-c2a5-4523-8f14-20649ac38fba" name="Changes" comment="ai">
-      <change afterPath="$PROJECT_DIR$/SoleMate/static/Img/blue-nike.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SoleMate/static/Img/guy-background.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SoleMate/static/Img/nike-glow-shoes.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SoleMate/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SoleMate/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SoleMate/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoleMate/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/home/templates/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/home/templates/home/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/shop/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/templates/shop/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/templates/shop/show.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/show.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,21 +66,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "#11 on Merging ai",
-    "last_opened_file_path": "/Users/veganboy/PycharmProjects/SoleMate",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#11 on ai&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/veganboy/PycharmProjects/SoleMate&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -116,6 +110,7 @@
       <workItem from="1744605370733" duration="33000" />
       <workItem from="1744605408802" duration="12536000" />
       <workItem from="1744688352497" duration="148000" />
+      <workItem from="1744688504427" duration="2370000" />
     </task>
     <task id="LOCAL-00001" summary="youtube">
       <option name="closed" value="true" />
@@ -141,11 +136,22 @@
       <option name="project" value="LOCAL" />
       <updated>1744668226999</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="ai">
+      <option name="closed" value="true" />
+      <created>1744688591177</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1744688591177</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
