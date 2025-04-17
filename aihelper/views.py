@@ -1,7 +1,7 @@
 import requests
 import json
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt  # ✅ This is the missing line
 from django.conf import settings
 from shop.models import Shoe
 
@@ -12,9 +12,13 @@ def build_context():
         info += f"{shoe.name} ({shoe.brand}) - ${shoe.price}: {shoe.description or 'No description'}\n"
     return info
 
+
 @csrf_exempt
 def chat(request):
-    if request.method == "POST":
+    if request.method != "POST":
+        return JsonResponse({"error": "Only POST method allowed"}, status=405)
+
+    try:
         data = json.loads(request.body)
         prompt = data.get("prompt", "")
 
@@ -53,13 +57,19 @@ def chat(request):
             json=payload
         )
 
-        result = response.json()
-
         if response.status_code == 200:
-            answer = result["choices"][0]["message"]["content"].strip()
-            return JsonResponse({"response": answer})
+            try:
+                result = response.json()
+                answer = result["choices"][0]["message"]["content"].strip()
+                return JsonResponse({"response": answer})
+            except Exception as e:
+                return JsonResponse({"error": f"Invalid JSON response: {str(e)}"}, status=500)
         else:
-            error_msg = result.get("error", result)
-            return JsonResponse({"error": error_msg}, status=response.status_code)
+            try:
+                error_json = response.json()
+                return JsonResponse({"error": error_json.get("error", error_json)}, status=response.status_code)
+            except:
+                return JsonResponse({"error": response.text}, status=response.status_code)
 
-    return JsonResponse({"error": "Only POST method allowed"}, status=405)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)

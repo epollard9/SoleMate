@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   {% load static %}
-  <div class = "flex-wrapper">
+  <div class="flex-wrapper">
   <head>
     <title>{{ template_data.title }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
 
-  <body class = "body" style="min-height: 50vh !important; max-height:60vh !important; display: block !important;height: 100% !important;overflow-y: hidden">
+  <body class="body" style="min-height: 50vh !important; max-height:60vh !important; display: block !important;height: 100% !important;overflow-y: hidden">
     <!-- Header -->
     <nav class="p-3 navbar navbar-dark bg-dark navbar-expand-lg" style="max-height:50px !important;">
       <div class="container">
@@ -30,19 +30,12 @@
             <a class="nav-link bg-dark" href="{% url 'home.news' %}">News</a>
             <a class="nav-link bg-dark" href="{% url 'shop.index' %}">Shop</a>
             <a class="nav-link bg-dark" href="{% url 'cart.view_cart' %}">Cart</a>
-            <div class="vr bg-light mx-2 d-none
-            d-lg-block"></div>
+            <div class="vr bg-light mx-2 d-none d-lg-block"></div>
             {% if user.is_authenticated %}
-            <a class="nav-link bg-dark"
-              href="{% url 'accounts.logout' %}">Logout ({{
-              user.username }})</a>
+            <a class="nav-link bg-dark" href="{% url 'accounts.logout' %}">Logout ({{ user.username }})</a>
             {% else %}
-            <a class="nav-link bg-dark"
-              href="{% url 'accounts.login' %}">Login</a>
-            <a class="nav-link bg-dark"
-              href="{% url 'accounts.signup' %}">
-              Sign Up
-            </a>
+            <a class="nav-link bg-dark" href="{% url 'accounts.login' %}">Login</a>
+            <a class="nav-link bg-dark" href="{% url 'accounts.signup' %}">Sign Up</a>
             {% endif %}
             <div class="vr bg-white mx-2 d-none d-lg-block"></div>
           </div>
@@ -52,11 +45,8 @@
     <!-- Header -->
 
     <div style="max-height: 50vh !important;">
-      {% block hero %}
-      {% endblock hero %}
-
-      {% block content %}
-      {% endblock content %}
+      {% block hero %}{% endblock hero %}
+      {% block content %}{% endblock content %}
     </div>
 
     <!--ai-->
@@ -70,6 +60,18 @@
     </div>
 
     <script>
+      function getCSRFToken() {
+        const name = "csrftoken";
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+          const trimmed = cookie.trim();
+          if (trimmed.startsWith(name + '=')) {
+            return decodeURIComponent(trimmed.substring(name.length + 1));
+          }
+        }
+        return '';
+      }
+
       async function sendAIRequest() {
         const input = document.getElementById("ai-input").value;
         const responseDiv = document.getElementById("ai-response");
@@ -81,56 +83,28 @@
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "X-CSRFToken": "{{ csrf_token }}"
+              "X-CSRFToken": getCSRFToken()
             },
             body: JSON.stringify({ prompt: input })
           });
 
-          const data = await res.json();
+          const contentType = res.headers.get("content-type");
 
-          if (data.response) {
-            responseDiv.innerHTML = "<strong>SOLE-MATE:</strong> " + data.response;
-          } else if (data.error) {
-            const errorText = typeof data.error === "object" ? JSON.stringify(data.error) : data.error;
-            responseDiv.innerHTML = "<strong>Error:</strong> " + errorText;
-          } else {
-            responseDiv.innerHTML = "Unexpected error occurred.";
+          if (!res.ok) {
+            const errorText = contentType && contentType.includes("application/json")
+              ? (await res.json()).error
+              : "Server returned non-JSON content.";
+            throw new Error(errorText);
           }
 
+          const data = await res.json();
+          responseDiv.innerHTML = "<strong>SOLE-MATE:</strong> " + data.response;
+
         } catch (error) {
-          responseDiv.innerHTML = "<strong>Request failed:</strong> " + error;
+          responseDiv.innerHTML = "<strong>Request failed:</strong> " + error.message;
         }
       }
     </script>
-    <!--
-    <footer class="footer">
-      <section class="p-3 ms-footer-bottom bg-dark">
-        <div class="row mt-3 text-white">
-          <div class="col-md-6 col-lg-6 col-xl-6 mx-auto mb-4">
-            <b>SoleMate</b>
-            <hr />
-            <p>Welcome to SoleMate, the online website where you are guaranteed to find your next favorite pair of shoes. Come
-              enjoy all the latest features and up to date selection that we host.</p>
-          </div>
-          <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
-            <b>LINKS</b>
-            <hr />
-            <p><a class="nav-link" href="{% url 'home.about' %}">About</a></p>
-            <p><a class="nav-link" href="{% url 'home.news' %}">News</a></p>
-            <p><a class="nav-link" href="{% url 'shop.index' %}">Shop</a></p>
-          </div>
-          <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
-            <b>CONTACT</b>
-            <hr />
-            <p><i class="fas fa-home me-2"></i> Atlanta, Georgia</p>
-            <p><i class="fas fa-envelope me-2"></i> info@solemate.com</p>
-            <p><i class="fas fa-phone me-2"></i> +81 03-3333-3333</p>
-          </div>
-        </div>
-      </section>
-    </footer>
-    -->
-    <!-- Footer -->
   </body>
 </div>
 </html>
