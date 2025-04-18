@@ -101,8 +101,8 @@
 /* Ensure the carousel starts below the fixed navbar */
 .hero-container {
   position: relative;
-  height: 50px;/* calc(100vh - 80px); Adjust based on your navbar height */
-  margin-top: 60px; /* Push it below the navbar */
+  height: calc(100vh - 80px); /*Adjust based on your navbar height */
+  margin-top: 10px !important; /* Push it below the navbar */
   overflow: hidden;
   z-index: 0;
 }
