@@ -72,23 +72,23 @@ def show(request, id):
 
 @login_required
 def create_review(request, id):
-    if request.method == 'POST' and request.POST['comment'] != '':
+    if request.method == 'POST' and request.POST['comment'] != '' and request.POST['star']:
         shoe = Shoe.objects.get(shoe_number=id)
         review = Review()
         review.comment = request.POST['comment']
         review.shoe = shoe
         review.user = request.user
-        review.rating = 2
+        review.rating = request.POST['star']
         review.save()
-        return redirect('shop.show', shoe_number=id)
+        return redirect('shop.show', id=id)
     else:
-        return redirect('shop.show', shoe_number=id)
+        return redirect('shop.show', id=id)
 
 @login_required
 def edit_review(request, id, review_id):
-    review = get_object_or_404(Review, shoe_number=review_id)
+    review = get_object_or_404(Review, shoe_id=review_id, user=request.user)
     if request.user != review.user:
-        return redirect('shop.show', shoe_number=id)
+        return redirect('shop.show', id=id)
 
     if request.method == 'GET':
         template_data = {}
@@ -96,12 +96,12 @@ def edit_review(request, id, review_id):
         template_data['review'] = review
         return render(request, 'shop/edit_review.html', {'template_data': template_data})
     elif request.method == 'POST' and request.POST['comment'] != '':
-        review = Review.objects.get(shoe_number=review_id)
+        review = Review.objects.get(id=review_id)
         review.comment = request.POST['comment']
         review.save()
-        return redirect('shop.show', shoe_number=id)
+        return redirect('shop.show', id=id)
     else:
-        return redirect('shop.show', shoe_number=id)
+        return redirect('shop.show', id=id)
 
 @login_required
 def delete_review(request, id, review_id):

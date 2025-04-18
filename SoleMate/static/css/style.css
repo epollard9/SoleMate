@@ -63,7 +63,7 @@
   max-height:66vh !important;
   display: flex;
   flex-direction: column;
-  overflow: hidden !important;
+  overflow: visible !important;
 }
 
 .footer {
