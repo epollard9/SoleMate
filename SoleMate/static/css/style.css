@@ -59,11 +59,9 @@
   justify-content: flex-start;
 }
 .body {
-  min-height: 66vh;
-  max-height:66vh !important;
+  min-height: 50vh;
   display: flex;
   flex-direction: column;
-  overflow: visible !important;
 }
 
 .footer {
@@ -101,8 +99,8 @@
 /* Ensure the carousel starts below the fixed navbar */
 .hero-container {
   position: relative;
-  height: calc(100vh - 80px); /*Adjust based on your navbar height */
-  margin-top: 10px !important; /* Push it below the navbar */
+  height: calc(100vh - 60px); /* Adjust based on your navbar height */
+  margin-top: 60px; /* Push it below the navbar */
   overflow: hidden;
   z-index: 0;
 }
@@ -110,7 +108,7 @@
 .carousel,
 .carousel-inner,
 .hero-slide {
-  height: 50px;
+  height: 100%;
 }
 
 .hero-slide {
@@ -157,12 +155,6 @@
   display: inline-block;
   margin-top: 1rem;
   transition: transform 0.2s ease;
-}
-
-.button-corner {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
 }
 
 
