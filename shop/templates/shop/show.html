@@ -128,7 +128,7 @@ label.star:before {
           {% for review in template_data.reviews %}
           <li class="list-group-item pb-3 pt-3" style="background-color: white">
             <h5 class="card-title">
-              {{review.rating}} star <r></r>eview by {{ review.user.username }} {{review.date}}
+              {{review.rating}} star review by {{ review.user.username }} {{review.date}}
             </h5>
             <h6 class="card-subtitle mb-2 text-muted">
               {{ review.date }}
