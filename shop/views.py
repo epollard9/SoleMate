@@ -25,14 +25,30 @@ def get_youtube_review_video(shoe_name):
 
 def index(request):
     search_term = request.GET.get('search')
+    size_term = request.GET.get('sizeFilter')
+    brand_term = request.GET.get('brandFilter')
+    price_term = request.GET.get('priceFilter')
     if search_term:
         shoes = Shoe.objects.filter(name__icontains=search_term)
     else:
         shoes = Shoe.objects.all()
+
+    if size_term:
+        shoes = Shoe.objects.filter(sizes__size_code=size_term)
+    else:
+        shoes = Shoe.objects.all()
+    if brand_term:
+        shoes = Shoe.objects.filter(brand__icontains=brand_term)
+    else:
+        shoes = Shoe.objects.all()
+    if price_term:
+        shoes=Shoe.objects.filter(price__lte=price_term)
+
     template_data = {}
     template_data['title'] = 'Shoes'
     template_data['shoes'] = shoes
     template_data['sizes'] = Size.objects.all()
+    template_data['brands'] = Shoe.objects.all()
     return render(request, 'shop/index.html',
                   {'template_data': template_data})
 
