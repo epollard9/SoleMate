@@ -41,38 +41,32 @@
           <h2>Filters</h2>
           <hr />
           <p class="card-text">
-            <div>Size:</div>
-            <form method="GET">
-            <select name="sizeFilter" class="form-select" aria-label="Default select example">
-            <option selected>Select Size</option>>
-            {% for size in template_data.sizes %}
-            <option value="{{size}}"> {{size}} </option>
-            {% endfor %}
-              <input type="submit" value="Submit">
-            </select>
-            </form>
-            <div>Price:</div>
           <form method="GET">
-            <select class="form-select" name="priceFilter" aria-label="Default select example">
-            <option selected>Select Price Range</option>>
-              <option value = 20> <$20</option>>
-              <option value = 40> <$40</option>>
-              <option value = 60> <$60</option>>
-              <option value = 80> <$80</option>>
-              <option value =100> <$100</option>>
-              <input type="submit" value="Submit">
-            </select>
-          </form>
-          <div>Brands</div>
-          <form method ="GET" name="brandFilter">
-          {% for shoe in template_data.brands %}
+            <fieldset id="size">
+              <legend>Size:</legend>
+              {% for size in template_data.sizes %}
+              <input type="radio" id="{{size}}" name="sizeFilter" value="{{size}}"><label for="{{size}}">{{size}}</label><br>
+              {% endfor %}
+            </fieldset>
+          <fieldset id ="price">
+            <legend>Price:</legend>
+            <input type="radio" id="20" name="priceFilter" value="20"><label for="20"> < $20</label><br>
+            <input type="radio" id="40" name="priceFilter" value="40"><label for="40"> < $40</label><br>
+            <input type="radio" id="60" name="priceFilter" value="60"><label for="60"> < $60</label><br>
+            <input type="radio" id="80" name="priceFilter" value="80"><label for="80"> < $80</label><br>
+            <input type="radio" id="100" name="priceFilter" value="100"><label for="100"> < $100</label><br>
+          </fieldset>
+          <fieldset id="brand">
+            <legend>Brand:</legend>
+            {% for shoe in template_data.brands %}
             <div class="row">
               <span>
                 <input type="checkbox" id={{shoe.brand}} name="brandFilter" value={{shoe.brand}}> <label for={{shoe.brand}}> {{shoe.brand}}</label>
               </span>
             </div>
           {% endfor %}
-          <input type="submit" value="Submit">
+          </fieldset>
+          <input type="submit" value="Search">
           </form>
           </p>
         </div>
