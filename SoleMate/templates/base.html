@@ -47,19 +47,36 @@
     <div style="max-height: 50vh !important;">
       {% block hero %}{% endblock hero %}
       {% block content %}{% endblock content %}
-    </div>
-
+      <div id = "aibox" class="card p-3 m-5 shadow rounded" style="display:none; position: absolute; right:350px; bottom:-50px;">
+          <h4 class="text-center">Ask Sole-Mate</h4>
+          <div class="row">
+            <textarea id="ai-input" class="form-control mb-2" rows="2" placeholder="Hi I am your Sole - Mate"></textarea>
+            <div class="text-center">
+              <button class="btn bg-dark text-white" onclick="sendAIRequest()">Ask</button>
+            </div>
+          </div>
+          <div id="ai-response" class="mt-3 border rounded p-2 text-dark bg-light" style="min-height: 50px;"></div>
+        </div>
+      <footer>
+        <div class="button-corner" style="float:right">
+          <button class="button-corner" onclick="toggleAI()">AI Assistant</button>
+        </div>
     <!--ai-->
-    <div class="card p-3 m-5 shadow rounded">
-      <h4 class="text-center">Ask Sole-Mate</h4>
-      <textarea id="ai-input" class="form-control mb-2" rows="2" placeholder="Hi I am your Sole - Mate"></textarea>
-      <div class="text-center">
-        <button class="btn bg-dark text-white" onclick="sendAIRequest()">Ask</button>
-      </div>
-      <div id="ai-response" class="mt-3 border rounded p-2 text-dark bg-light" style="min-height: 50px;"></div>
+      </footer>
     </div>
 
     <script>
+      showingAI = 0;
+
+      function toggleAI(){
+        if (showingAI) {
+          document.getElementById("aibox").style.display = "none";
+          showingAI = 0;
+        } else {
+          document.getElementById("aibox").style.display = "block";
+          showingAI = 1;
+        }
+      }
       function getCSRFToken() {
         const name = "csrftoken";
         const cookies = document.cookie.split(';');
