@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
 
-  <body class = "body" style="min-height: 50vh !important; max-height:60vh !important; display: block !important;height: 100% !important;overflow-y: hidden">
+<body class="body" style="min-height: 100vh;">
     <!-- Header -->
     <nav class="p-3 navbar navbar-dark bg-dark navbar-expand-lg" style="max-height:50px !important;">
       <div class="container">
@@ -27,9 +27,9 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto navbar-ml">
             <a class="nav-link" href="{% url 'home.about' %}">About</a>
-            <a class="nav-link bg-dark" href="{% url 'home.news' %}">News</a>
             <a class="nav-link bg-dark" href="{% url 'shop.index' %}">Shop</a>
             <a class="nav-link bg-dark" href="{% url 'cart.view_cart' %}">Cart</a>
+            <a class="nav-link bg-dark" href="{% url 'news' %}">News</a>
             <div class="vr bg-light mx-2 d-none
             d-lg-block"></div>
             {% if user.is_authenticated %}
