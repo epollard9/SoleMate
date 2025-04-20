@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a5335e4d-c2a5-4523-8f14-20649ac38fba" name="Changes" comment="youtube fixed">
-      <change afterPath="$PROJECT_DIR$/news/templates/news/news.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/news/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_5_25,_7_02 PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_5_25,_7_03 PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_5_25__7_02PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_5_25__7_03PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SoleMate/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SoleMate/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SoleMate/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/home/templates/home/news.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/home/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/home/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/home/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/home/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/templates/shop/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/index.html" afterDir="false" />
+    <list default="true" id="a5335e4d-c2a5-4523-8f14-20649ac38fba" name="Changes" comment="calendar added">
       <change beforePath="$PROJECT_DIR$/shop/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/shop/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -118,7 +103,7 @@
       <workItem from="1744147244408" duration="1013000" />
       <workItem from="1744479391177" duration="3087000" />
       <workItem from="1744492698510" duration="300000" />
-      <workItem from="1745100015941" duration="4303000" />
+      <workItem from="1745100015941" duration="4424000" />
     </task>
     <task id="LOCAL-00001" summary="youtube">
       <option name="closed" value="true" />
@@ -136,7 +121,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744765253000</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="calendar added">
+      <option name="closed" value="true" />
+      <created>1745107520871</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1745107520871</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,6 +149,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="youtube" />
     <MESSAGE value="youtube fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="youtube fixed" />
+    <MESSAGE value="calendar added" />
+    <option name="LAST_COMMIT_MESSAGE" value="calendar added" />
   </component>
 </project>
