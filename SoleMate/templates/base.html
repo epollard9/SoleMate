@@ -13,13 +13,11 @@
   </head>
 
   <body class="body" style="min-height: 50vh !important; max-height:60vh !important; display: block !important;height: 100% !important;overflow-y: hidden">
-    <!-- Header -->
-    <nav class="p-3 navbar navbar-dark bg-dark navbar-expand-lg" style="max-height:50px !important;">
+    <nav class="p-3 navbar navbar-dark bg-dark navbar-expand-lg" style="max-height:80px !important;">
       <div class="container">
          <a class="navbar-brand" href="{% url 'home.index' %}">
-          <img src="{% static 'img/logo.png' %}" alt="logo" height="40" />
+           <div class="banner"><strong> SoleMate</strong></div>
         </a>
-        <div class="banner"> SoleMate</div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -27,9 +25,11 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto navbar-ml">
             <a class="nav-link" href="{% url 'home.about' %}">About</a>
-            <a class="nav-link bg-dark" href="{% url 'home.news' %}">News</a>
+            <a class="nav-link bg-dark" href="{% url 'news' %}">News</a>
             <a class="nav-link bg-dark" href="{% url 'shop.index' %}">Shop</a>
-            <a class="nav-link bg-dark" href="{% url 'cart.view_cart' %}">Cart</a>
+            <a class="nav-link bg-dark" href="{% url 'cart:view_cart' %}">
+              Cart{% if cart_item_count > 0 %} ({{ cart_item_count }}){% endif %}
+            </a>
             <div class="vr bg-light mx-2 d-none d-lg-block"></div>
             {% if user.is_authenticated %}
             <a class="nav-link bg-dark" href="{% url 'accounts.logout' %}">Logout ({{ user.username }})</a>
@@ -42,23 +42,40 @@
         </div>
       </div>
     </nav>
-    <!-- Header -->
 
     <div style="max-height: 50vh !important;">
       {% block hero %}{% endblock hero %}
       {% block content %}{% endblock content %}
-    </div>
-
-    <!--ai-->
-    <div class="card p-3 m-5 shadow rounded">
-      <h4 class="text-center">Ask Sole-Mate</h4>
-      <textarea id="ai-input" class="form-control mb-2" rows="2" placeholder="Hi I am your Sole - Mate"></textarea>
-      <div class="text-center">
-        <button class="btn bg-dark text-white" onclick="sendAIRequest()">Ask</button>
+      <div id="aibox" class="card p-3 m-5 shadow rounded" style="display:none; position: absolute; right:350px; bottom:-50px;">
+        <h4 class="text-center">Ask Sole-Mate</h4>
+        <div class="row">
+          <textarea id="ai-input" class="form-control mb-2" rows="2" placeholder="Hi I am your Sole - Mate"></textarea>
+          <div class="text-center">
+            <button class="btn bg-dark text-white" onclick="sendAIRequest()">Ask</button>
+          </div>
+        </div>
+        <div id="ai-response" class="mt-3 border rounded p-2 text-dark bg-light" style="min-height: 50px;"></div>
       </div>
-      <div id="ai-response" class="mt-3 border rounded p-2 text-dark bg-light" style="min-height: 50px;"></div>
+      <footer>
+        {% if user.is_authenticated %}
+        <div class="button-corner" style="float:right">
+          <button class="button-corner" onclick="toggleAI()">AI Assistant</button>
+        </div>
+        {% endif %}
+      </footer>
     </div>
     <script>
+      showingAI = 0;
+
+      function toggleAI(){
+        if (showingAI) {
+          document.getElementById("aibox").style.display = "none";
+          showingAI = 0;
+        } else {
+          document.getElementById("aibox").style.display = "block";
+          showingAI = 1;
+        }
+      }
       function getCSRFToken() {
         const name = "csrftoken";
         const cookies = document.cookie.split(';');
