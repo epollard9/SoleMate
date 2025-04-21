@@ -3,9 +3,10 @@ from django.contrib.auth.models import User
 from shop.models import Shoe
 
 class CartItem(models.Model):
+    quantity = models.PositiveIntegerField(default=1)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     shoe = models.ForeignKey(Shoe, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
+    size = models.PositiveIntegerField(default=1)
 
     class Meta:
         unique_together = ('user', 'shoe')

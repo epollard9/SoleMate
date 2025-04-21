@@ -7,7 +7,7 @@ import urllib.request
 import urllib.parse
 import json
 
-YOUTUBE_API_KEY = "AIzaSyBux6v-ckL2RSwBdJjFbrixoeFcrwDK4jQ"
+YOUTUBE_API_KEY = "AIzaSyAAnE0NvfJeWJVk46Gt-F2wKT49xEbDSiV4"
 
 def get_youtube_review_video(shoe_name):
     query = urllib.parse.quote(f"{shoe_name} review")
@@ -28,21 +28,15 @@ def index(request):
     size_term = request.GET.get('sizeFilter')
     brand_term = request.GET.get('brandFilter')
     price_term = request.GET.get('priceFilter')
+    shoes = Shoe.objects.all()
     if search_term:
         shoes = Shoe.objects.filter(name__icontains=search_term)
-    else:
-        shoes = Shoe.objects.all()
-
     if size_term:
         shoes = Shoe.objects.filter(sizes__size_code=size_term)
-    else:
-        shoes = Shoe.objects.all()
     if brand_term:
         shoes = Shoe.objects.filter(brand__icontains=brand_term)
-    else:
-        shoes = Shoe.objects.all()
     if price_term:
-        shoes=Shoe.objects.filter(price__lte=price_term)
+        shoes = Shoe.objects.filter(price__lte=price_term)
 
     template_data = {}
     template_data['title'] = 'Shoes'
