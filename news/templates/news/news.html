@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5 mb-5" style="min-height: 100vh;">
+    <h2 class="mb-4">Upcoming Sneaker Releases</h2>
+    {% if shoes %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for shoe in shoes %}
+            <div class="col">
+                <div class="card h-100 shadow-sm border-dark">
+                    {% if shoe.image %}
+                    <img src="{{ shoe.image.url }}" class="card-img-top" alt="{{ shoe.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ shoe.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ shoe.brand }}</h6>
+                        <p class="card-text">{{ shoe.description|default:"No description provided." }}</p>
+                        <p><strong>Release Date:</strong> {{ shoe.release_date }}</p>
+                        <p><strong>Price:</strong> ${{ shoe.price }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No upcoming releases found.</p>
+    {% endif %}
+</div>
+{% endblock %}

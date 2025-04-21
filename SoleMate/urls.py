@@ -29,6 +29,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('home/', include('home.urls')),
     path('ai/', include('aihelper.urls')),
+    path('news/', include('news.urls')),
 ]
 
 

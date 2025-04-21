@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,6 +19,7 @@ INSTALLED_APPS = [
     'cart',
     'accounts',
     'aihelper',
+    'news',
 ]
 
 MIDDLEWARE = [
@@ -45,7 +45,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'cart.context_processors.cart_item_count',
             ],
         },
     },

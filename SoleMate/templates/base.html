@@ -25,7 +25,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto navbar-ml">
             <a class="nav-link" href="{% url 'home.about' %}">About</a>
-            <a class="nav-link bg-dark" href="{% url 'home.news' %}">News</a>
+            <a class="nav-link bg-dark" href="{% url 'news' %}">News</a>
             <a class="nav-link bg-dark" href="{% url 'shop.index' %}">Shop</a>
             <a class="nav-link bg-dark" href="{% url 'cart:view_cart' %}">
               Cart{% if cart_item_count > 0 %} ({{ cart_item_count }}){% endif %}
@@ -64,7 +64,6 @@
         {% endif %}
       </footer>
     </div>
-
     <script>
       showingAI = 0;
 
