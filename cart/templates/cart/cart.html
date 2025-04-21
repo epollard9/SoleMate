@@ -1,19 +1,62 @@
-{% extends 'base.html' %}% extends 'base.html' %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="main-content">
-    <h1>Your Shopping Cart</h1>
+<div class="container mt-4">
+    <h2 class="mb-4">Your Cart</h2>
     {% if cart_items %}
-        <ul>
-        {% for item in cart_items %}
-            <li>
-                <strong>{{ item.name }}</strong> - ${{ item.price }}
-                <a href="{% url 'cart.remove' item.id %}">Remove</a>
-            </li>
-        {% endfor %}
-        </ul>
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Shoe</th>
+                    <th>Size</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>
+                        <img src="{{ item.shoe.image.url }}" class="img-fluid rounded" width="60" height="60" />
+                        <strong class="ms-2">{{ item.shoe.name }}</strong>
+                    </td>
+                    <td>{{ item.shoe.sizes.first }}</td>
+                    <td>
+                        <input type="number" class="form-control quantity-input" value="{{ item.quantity }}" min="1"
+                               data-id="{{ item.shoe.pk }}">
+                    </td>
+                    <td>${{ item.shoe.price }}</td>
+                    <td>${{ item.subtotal|floatformat:2 }}</td>
+                    <td>
+                        <a href="{% url 'cart:remove_from_cart' item.shoe.pk %}" class="btn btn-outline-danger btn-sm">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-end">
+            <h4>Total: ${{ total|floatformat:2 }}</h4>
+        </div>
     {% else %}
-        <p>Your cart is empty.</p>
+        <div class="alert alert-info">Your cart is empty.</div>
     {% endif %}
 </div>
+
+<script>
+document.querySelectorAll('.quantity-input').forEach(input => {
+    input.addEventListener('change', () => {
+        fetch("{% url 'cart:update_quantity' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `shoe_id=${input.dataset.id}&quantity=${input.value}`
+        }).then(() => location.reload());
+    });
+});
+</script>
 {% endblock %}
