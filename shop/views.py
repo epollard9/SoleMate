@@ -7,7 +7,7 @@ import urllib.request
 import urllib.parse
 import json
 
-YOUTUBE_API_KEY = "AIzaSyBux6v-ckL2RSwBdJjFbrixoeFcrwDK4jQ"
+YOUTUBE_API_KEY = "AIzaSyCSOLAiDxAsl6Xqe1AHoN9WU9pPf4GIXn0"
 
 def get_youtube_review_video(shoe_name):
     query = urllib.parse.quote(f"{shoe_name} review")

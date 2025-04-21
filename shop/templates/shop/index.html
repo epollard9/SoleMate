@@ -86,7 +86,13 @@
         {% for shoe in template_data.shoes %}
         <div class="col-md-4 col-lg-3" style="padding: 10px">
           <div class="card align-items-center pt-4" style="padding-top:0px !important; text-align: left !important; padding-bottom: 0px !important;">
-            <img src="{{shoe.image.url}}" class="card-img-top" style="width: fit-content; height: 20vh;">
+            {% if shoe.image %}
+            <img src="{{ shoe.image.url }}" class="card-img-top" style="width: fit-content; height: 20vh;">
+            {% else %}
+             <div class="card-img-top d-flex align-items-center justify-content-center bg-light text-muted" style="height: 20vh;">
+            <em>No image</em>
+          </div>
+          {% endif %}
             <div class="card-body" style="padding-bottom: 0px; margin-left: 2px">
               <p class="card-title" style="padding-left: 5px;"> {{shoe.name}} </p>
               <a style="width:225px" href="{% url 'shop.show' id=shoe.shoe_number %}" class="btn bg-dark "> {{ shoe.name }} </a>
