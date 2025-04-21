@@ -126,6 +126,18 @@
       </div>
       <div class="col-md-6 mx-auto mb-3 text-center"> <img src="{{ template_data.shoe.image.url}}" class="rounded img-card-400" /></div>
 
+      {% if template_data.youtube_video_url %}
+  <div class="mt-5 text-center">
+    <h4 class="mb-3">Video Review</h4>
+    <iframe width="400" height="225"
+            src="{{ template_data.youtube_video_url }}"
+            frameborder="0" allowfullscreen
+            class="rounded shadow-sm">
+    </iframe>
+  </div>
+{% endif %}
+
+
     </div>
     <div id="cart-feedback" class="alert alert-success" style="display: none;">Added to cart!</div>
   </div>
