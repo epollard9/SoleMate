@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="p-3" style="overflow-y: visible !important">
+  <div class="container mt-4" style="margin-top: 5px !important; margin-bottom:10px !important;overflow-y: visible !important;">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="card shadow p-3 mb-4 rounded">
+          <div class="card-body">
+            <form method="POST" action="{% url 'shop.create_shoe' %}">
+              {% csrf_token %}
+              <p>
+              <div>
+                <label for="shoe_name">Name:</label><br>
+                <input type="text" id="shoe_name" name="shoe_name"><br>
+              <label for="shoe_price">Price:</label><br>
+                $<input type="text" id="shoe_price" name="shoe_price"><br>
+              <label for="shoe_description">Description:</label><br>
+                <textarea name="shoe_description" required class="form-control" id="shoe_description"></textarea>
+              <label for="imageUpload">Choose an image:</label>
+              <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
+              {% for size in template_data.sizes %}
+              <div class="row">
+                <span>
+                  <input type="checkbox" id={{size}} name="sizes" value={{size}}> <label for={{size}}> {{size}}</label>
+                </span>
+              </div>
+              {% endfor %}
+              </div>
+              </p>
+              <div class="text-center">
+                <button type="submit" class="btn bg-dark text-white">
+                  Sell shoe!
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

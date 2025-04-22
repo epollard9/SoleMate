@@ -69,17 +69,19 @@
           <input type="submit" value="Search">
           </form>
           </p>
+            {% if user.is_authenticated %}
+            <a class = "nav-link" href="{% url 'shop.sell' %}"> Sell shoe</a>
+            {% endif %}
         </div>
       </div>
     </div>
     <div class="content" style=" min-height:70vh; max-height:100vh; overflow-y: scroll !important; overflow-x:hidden; padding-left: 10px !important; padding-right: 10px !important;" >
-      <h2>
-        <div class="navbar-nav ms-auto navbar-ml">
-           <a class="nav-link" href="{% url 'shop.index' %}">Brand Shoes</a>
-           <a class="nav-link" href="{% url 'shop.seller' %}">Member Shoes</a>
-        </div>
-      </h2>
-      <div class = "row">
+        <h2>
+            <div class="navbar-nav ms-auto navbar-ml">
+                <a class="nav-link" href="{% url 'shop.index' %}">Brand Shoes</a> <a class="nav-link" href="{% url 'shop.seller' %}">Member Shoes</a>
+            </div>
+        </h2>
+        <div class = "row">
         <form method="GET">
             <div class="row" style="padding-bottom: 15px;">
               <div class="col-auto">
@@ -104,7 +106,7 @@
           {% endif %}
             <div class="card-body" style="padding-bottom: 0px; margin-left: 2px">
               <p class="card-title" style="padding-left: 5px;"> {{shoe.name}} </p>
-              <a style="width:225px" href="{% url 'shop.show' id=shoe.shoe_number %}" class="btn bg-dark "> {{ shoe.name }} </a>
+              <a style="width:225px" href="{% url 'shop.edit_shoe' id=shoe.shoe_number %}" class="btn bg-dark "> {{ shoe.name }} </a>
             </div>
           </div>
         </div>
