@@ -97,6 +97,17 @@ label.star:before {
         <a href="#" class="btn add-to-cart" style="background-color: #CBCBCB;" data-id="{{ template_data.shoe.shoe_number }}">Add to Cart</a>
         <hr />
 
+        {% if user.is_authenticated %}
+          {% if template_data.shoe in user.subscribed_shoes.all %}
+            <p class="mt-3 text-success"><strong>You are subscribed to this shoe!</strong></p>
+          {% else %}
+            <form method="POST" action="{% url 'subscribe_shoe' shoe_id=template_data.shoe.shoe_number %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary mt-2">Subscribe to Release Updates</button>
+            </form>
+          {% endif %}
+        {% endif %}
+
       </div>
       {% if template_data.youtube_video_url %}
         <hr />
@@ -180,19 +191,6 @@ label.star:before {
       <div></div>
       <div></div>
       </div>
-
-      {% if template_data.youtube_video_url %}
-  <div class="mt-5 text-center">
-    <h4 class="mb-3">Video Review</h4>
-    <iframe width="400" height="225"
-            src="{{ template_data.youtube_video_url }}"
-            frameborder="0" allowfullscreen
-            class="rounded shadow-sm">
-    </iframe>
-  </div>
-{% endif %}
-
-
     </div>
     <div id="cart-feedback" class="alert alert-success" style="display: none;">Added to cart!</div>
   </div>

@@ -174,3 +174,9 @@ def delete_review(request, id, review_id):
     review = get_object_or_404(Review, id=review_id, user=request.user)
     review.delete()
     return redirect('shop.show', id=id)
+
+@login_required
+def subscribe_shoe(request, shoe_id):
+    shoe = get_object_or_404(Shoe, pk=shoe_id)
+    request.user.subscribed_shoes.add(shoe)
+    return redirect('news')  # or wherever you want to redirect after subscribing
