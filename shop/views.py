@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Shoe, Size, Review
 from django.contrib.auth.decorators import login_required
-
+from django.utils.timezone import localdate
 # Create your views here.
 import urllib.request
 import urllib.parse
@@ -28,7 +28,7 @@ def index(request):
     size_term = request.GET.get('sizeFilter')
     brand_term = request.GET.get('brandFilter')
     price_term = request.GET.get('priceFilter')
-    shoes = Shoe.objects.all()
+    shoes = Shoe.objects.exclude(brand__icontains="Sneaker Enthusiast")
     if search_term:
         shoes = Shoe.objects.filter(name__icontains=search_term)
     if size_term:
@@ -37,14 +37,29 @@ def index(request):
         shoes = Shoe.objects.filter(brand__icontains=brand_term)
     if price_term:
         shoes = Shoe.objects.filter(price__lte=price_term)
+    shoes = shoes.exclude(brand__icontains="Sneaker Enthusiast")
 
     template_data = {}
     template_data['title'] = 'Shoes'
     template_data['shoes'] = shoes
     template_data['sizes'] = Size.objects.all()
-    template_data['brands'] = Shoe.objects.all()
+    template_data['brands'] = Shoe.objects.exclude(brand__icontains="Sneaker Enthusiast")
     return render(request, 'shop/index.html',
                   {'template_data': template_data})
+
+def seller(request):
+    template_data = {}
+    shoes = Shoe.objects.filter(brand__icontains="Sneaker Enthusiast")
+    template_data['title'] = 'Shoes'
+    template_data['shoes'] = shoes
+    template_data['sizes'] = Size.objects.all()
+    return render(request, 'shop/seller.html',{'template_data': template_data})
+
+def sell(request):
+    template_data = {}
+    template_data['title'] = 'Shoes'
+    template_data['sizes'] = Size.objects.all()
+    return render(request, 'shop/sell.html',{'template_data': template_data})
 
 def show(request, id):
     shoe = get_object_or_404(Shoe, shoe_number=id)
@@ -62,7 +77,64 @@ def show(request, id):
     }
     return render(request, 'shop/show.html', {'template_data': template_data})
 
+def my_listings(request):
+    template_data={}
+    name = "Sneaker Enthusiast " + request.user.username
+    template_data['shoes'] = Shoe.objects.filter(brand__icontains =name)
+    return render(request, 'shop/my_listings.html', {'template_data': template_data})
 
+def edit_shoe(request, id):
+    shoe = get_object_or_404(Shoe, shoe_number=id)
+    template_data = {
+        'title': shoe.name,
+        'shoe': shoe,
+        'sizes': Size.objects.all(),
+    }
+    return render(request, 'shop/edit_shoe.html', {'template_data': template_data})
+
+def edit_shoe_entry(request, id):
+    shoe = get_object_or_404(Shoe, shoe_number=id)
+
+    if request.method == 'POST':
+        shoe.name = request.POST['shoe_name']
+        shoe.price = request.POST['shoe_price']
+        shoe.description = request.POST['shoe_description']
+        shoe.image = request.POST['imageUpload']
+        shoe.save()
+        for key, values in request.POST.lists():
+            if key == "sizes":
+                for value in values:
+                    shoe.sizes.add(value)
+                    shoe.save()
+        return redirect('shop.seller')
+    else:
+        return redirect('shop.seller')
+
+
+@login_required
+def create_shoe(request):
+    max = 0
+    for shoe in Shoe.objects.all():
+        if int(shoe.shoe_number) > max:
+            max = int(shoe.shoe_number)
+    if request.method == 'POST':
+        shoe = Shoe()
+        shoe.name = request.POST['shoe_name']
+        shoe.brand = "Sneaker Enthusiast " + request.user.username
+        shoe.price = request.POST['shoe_price']
+        shoe.description = request.POST['shoe_description']
+        shoe.image = request.POST['imageUpload']
+        shoe.shoe_number = str(max+1)
+        shoe.release_date = localdate()
+        shoe.save()
+        for key, values in request.POST.lists():
+            if key == "sizes":
+                for value in values:
+                    shoe.sizes.add(value)
+                    shoe.save()
+        return redirect('shop.seller')
+    else:
+        return redirect('shop.seller')
 
 @login_required
 def create_review(request, id):
