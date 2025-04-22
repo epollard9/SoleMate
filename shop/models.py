@@ -20,6 +20,7 @@ class Shoe(models.Model):
     sizes = models.ManyToManyField('Size')
     image = models.ImageField(upload_to='shoe_images/', null=True, blank=True)
     description = models.TextField(blank=True, null=True)
+    subscribers = models.ManyToManyField(User, related_name='subscribed_shoes', blank=True)
 
     discount = models.DecimalField(
         max_digits=5,
