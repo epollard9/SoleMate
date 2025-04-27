@@ -1,230 +1,249 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
+
+{% block content %}
 <style>
-#id_shoe_size {
-  height: 44px;
-  border: none;
-  overflow: hidden;
-}
-#id_shoe_size::-moz-focus-inner {
-  border: 0;
-}
-#id_shoe_size:focus {
-  outline: none;
-}
-#id_shoe_size option {
-  width: 60px;
-  height: 40px;
-  font-size: 1.2em;
-  padding: 5px 0;
-  text-align: center;
-  margin-right: 20px;
-  display: inline-block;
-  cursor: pointer;
-  border: black solid 1px;
-  border-radius: 5px;
-  color: black;
-}
-.collapsible {
-  background-color: #eee;
-  color: #444;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-}
-.active, .collapsible:hover {
-  background-color: #ccc;
-}
-.content {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #f1f1f1;
-}
-div.stars {
-  width: 270px;
-  display: inline-block;
-}
-input.star { display: none; }
-label.star {
-  float: right;
-  padding: 10px;
-  font-size: 36px;
-  color: #444;
-  transition: all .2s;
-}
-input.star:checked ~ label.star:before {
-  content: '\f005';
-  color: #FD4;
-  transition: all .25s;
-}
-input.star-5:checked ~ label.star:before {
-  color: #FE7;
-  text-shadow: 0 0 20px #952;
-}
-input.star-1:checked ~ label.star:before { color: #F62; }
-label.star:hover { transform: rotate(-15deg) scale(1.3); }
-label.star:before {
-  content: '\f006';
-  font-family: FontAwesome;
-}
+  /* Collapsible reviews */
+  .collapsible {
+    background-color: #eee; color: #444; cursor: pointer;
+    padding: 18px; width: 100%; border: none;
+    text-align: left; outline: none; font-size: 15px;
+  }
+  .active, .collapsible:hover { background-color: #ccc; }
+  .content {
+    padding: 0 18px; display: none; overflow: hidden;
+    background-color: #f1f1f1;
+  }
+
+  /* Star review styling */
+  div.stars { width: 270px; display: inline-block; }
+  input.star { display: none; }
+  label.star {
+    float: right; padding: 10px; font-size: 36px;
+    color: #444; transition: all .2s;
+  }
+  input.star:checked ~ label.star:before {
+    content: '\f005'; color: #FD4; transition: all .25s;
+  }
+  input.star-5:checked ~ label.star:before { color: #FE7; text-shadow: 0 0 20px #952; }
+  input.star-1:checked ~ label.star:before { color: #F62; }
+  label.star:hover { transform: rotate(-15deg) scale(1.3); }
+  label.star:before { content: '\f006'; font-family: FontAwesome; }
+
+  /* Size buttons */
+  .size-btn {
+    margin: .25rem;
+    padding: .5rem 1rem;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+  }
+  .size-btn.active {
+    background-color: #444;
+    color: #fff;
+  }
 </style>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
 <div class="p-3" style="overflow-y: visible !important">
-  <div class="container" style ="max-height:100vh; overflow-y: visible">
+  <div class="container" style="max-height:100vh; overflow-y: visible">
     <div class="row mt-3">
-      <div class="col-md-6  mb-3" style="padding-right:5px !important;">
-        <img style="padding-right: 10px;" src="{{ template_data.shoe.image.url}}" class="rounded img-card-400" />
+      <!-- Shoe Image -->
+      <div class="col-md-6 mb-3" style="padding-right:5px !important;">
+        <img src="{{ template_data.shoe.image.url }}"
+             class="rounded img-card-400" />
       </div>
+
+      <!-- Shoe Details & Add-to-Cart -->
       <div class="col-md-6 mx-auto mb-3 content2">
-        <h2 style="padding-top: 10px">{{ template_data.shoe.name }}</h2>
-        <p style="padding-top: 2px">${{ template_data.shoe.price }}</p>
-        <hr />
-        <h6>Select Size:</h6>
-        <div class="row" style="padding: 5px;text-align: center">
-          <select name="shoe_size" id="id_shoe_size" multiple>
-          {% for shoe_size in template_data.shoe.sizes.all%}
-          <option value="{{shoe_size}}">{{shoe_size}}</option>
-          {% endfor %}
-          </select>
-        </div>
-        <p><strong>Description:</strong> {{ template_data.shoe.description }}</p>
-        <a href="#" class="btn add-to-cart" style="background-color: #CBCBCB;" data-id="{{ template_data.shoe.shoe_number }}">Add to Cart</a>
+        <h2>{{ template_data.shoe.name }}</h2>
+        <p>${{ template_data.shoe.price }}</p>
         <hr />
 
+        <!-- Size Selector as buttons -->
+        <h6>Select Size:</h6>
+        <div class="mb-3">
+          {% for shoe_size in template_data.shoe.sizes.all %}
+            <button
+              type="button"
+              class="size-btn"
+              data-size="{{ shoe_size.size_code }}"
+            >
+              {{ shoe_size.size_code }}
+            </button>
+          {% endfor %}
+        </div>
+
+        <p><strong>Description:</strong> {{ template_data.shoe.description }}</p>
+
+        <!-- Add to Cart Button -->
+        <a href="#" class="btn btn-secondary add-to-cart"
+           data-id="{{ template_data.shoe.shoe_number }}">
+          Add to Cart
+        </a>
+        <hr />
+
+        <!-- Subscription Logic -->
         {% if user.is_authenticated %}
           {% if template_data.shoe in user.subscribed_shoes.all %}
-            <p class="mt-3 text-success"><strong>You are subscribed to this shoe!</strong></p>
+            <p class="mt-3 text-success">
+              <strong>You are subscribed to this shoe!</strong>
+            </p>
           {% else %}
-            <form method="POST" action="{% url 'subscribe_shoe' shoe_id=template_data.shoe.shoe_number %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary mt-2">Subscribe to Release Updates</button>
+            <form method="POST"
+                  action="{% url 'subscribe_shoe' shoe_id=template_data.shoe.shoe_number %}">
+              {% csrf_token %}
+              <button type="submit"
+                      class="btn btn-primary mt-2">
+                Subscribe to Release Updates
+              </button>
             </form>
           {% endif %}
         {% endif %}
-
       </div>
-      {% if template_data.youtube_video_url %}
-        <hr />
-        <h3 class="mt-3">Video Review</h3>
-        <div style="max-width: 100%; margin: 0 auto; max-height:500px">
-          <div style="position:relative; padding-bottom:56.25%; height:500px; overflow:hidden;">
-            <iframe src="{{ template_data.youtube_video_url }}"
-                    style="position:absolute; top:0; left:0; width:100%; height:500px;"
-                    frameborder="0"
-                    allowfullscreen>
-            </iframe>
-          </div>
+    </div>
 
-        </div>
-        {% endif %}
-      <button type="button" id="review-btn" class="collapsible" style="padding-top:15px;width:100px; background-color: white; font-size: larger; padding-left: 0px !important;" onclick="openCollapse()"><strong>Reviews v</strong></button>
-        <hr />
-        <ul class="list-group content" id="hidden" style="background-color: white">
-          {% for review in template_data.reviews %}
-          <li class="list-group-item pb-3 pt-3" style="background-color: white">
-            <h5 class="card-title">
-              {{review.rating}} star review by {{ review.user.username }} {{review.date}}
-            </h5>
-            <h6 class="card-subtitle mb-2 text-muted">
-              {{ review.date }}
-            </h6>
-            <p class="card-text">{{ review.comment }}</p>
-            {% if user.is_authenticated and user == review.user %}
-            <a class="btn btn-primary"
-              href="{% url 'shop.edit_review' id=template_data.shoe.shoe_number review_id=review.id %}">
+    <!-- Video Review -->
+    {% if template_data.youtube_video_url %}
+      <hr />
+      <h3 class="mt-3">Video Review</h3>
+      <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden;">
+        <iframe src="{{ template_data.youtube_video_url }}"
+                style="position:absolute; top:0; left:0; width:100%; height:100%;"
+                frameborder="0" allowfullscreen>
+        </iframe>
+      </div>
+    {% endif %}
+
+    <!-- Reviews Collapsible -->
+    <button type="button" id="review-btn" class="collapsible">
+      <strong>Reviews v</strong>
+    </button>
+    <ul class="list-group content" id="hidden" style="background-color: white">
+      {% for review in template_data.reviews %}
+        <li class="list-group-item pb-3 pt-3">
+          <h5>
+            <i class="fa fa-star text-warning"></i>
+            {{ review.rating }} by {{ review.user.username }}
+          </h5>
+          <p>{{ review.comment }}</p>
+          {% if user.is_authenticated and user == review.user %}
+            <a class="btn btn-sm btn-outline-primary"
+               href="{% url 'shop.edit_review' id=template_data.shoe.shoe_number review_id=review.id %}">
               Edit
             </a>
-            <a class="btn btn-danger"
-              href="{% url 'shop.delete_review' id=template_data.shoe.shoe_number review_id=review.id %}">
+            <a class="btn btn-sm btn-outline-danger"
+               href="{% url 'shop.delete_review' id=template_data.shoe.shoe_number review_id=review.id %}">
               Delete
             </a>
-            {% endif %}
-          </li>
-          {% endfor %}
-        </ul>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
 
-        {% if user.is_authenticated %}
-        <div class="container mt-4" style="margin-top: 5px !important; margin-bottom:10px !important;overflow-y: visible !important;">
-          <div class="row justify-content-center">
-            <div class="col-12">
-              <div class="card shadow p-3 mb-4 rounded">
-                <div class="card-body">
-                  <form method="POST" action="{% url 'shop.create_review' id=template_data.shoe.shoe_number %}">
-                    {% csrf_token %}
-                    <p>
-                      <fieldset class="star">
-                          <legend>Write a review</legend>
-                          <input class="star star-5" type="radio" id="star-5" name="star" value="5"/>
-                          <label class="star star-5" for="star-5"></label>
-                          <input class="star star-4" id="star-4" type="radio" value="4" name="star"/>
-                          <label class="star star-4" for="star-4"></label>
-                          <input class="star star-3" id="star-3" type="radio" value="3" name="star"/>
-                          <label class="star star-3" for="star-3"></label>
-                          <input class="star star-2" id="star-2" type="radio" value="2" name="star"/>
-                          <label class="star star-2" for="star-2"></label>
-                          <input class="star star-1" id="star-1" type="radio" value = "1" name="star"/>
-                          <label class="star star-1" for="star-1"></label>
-                      </fieldset>
-                    <div>
-                      <label for="comment">Comment:</label>
-                      <textarea name="comment" required class="form-control" id="comment"></textarea>
-                    </div>
-                    </p>
-                    <div class="text-center">
-                      <button type="submit" class="btn bg-dark text-white">
-                        Add Review
-                      </button>
-                    </div>
-                  </form>
-                </div>
+    <!-- Add New Review Form -->
+    {% if user.is_authenticated %}
+      <div class="container mt-4">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="card shadow p-3 mb-4 rounded">
+              <div class="card-body">
+                <form method="POST"
+                      action="{% url 'shop.create_review' id=template_data.shoe.shoe_number %}">
+                  {% csrf_token %}
+                  <fieldset class="star mb-3">
+                    <legend>Write a review</legend>
+                    <input class="star star-5" type="radio" id="star-5" name="star" value="5"/>
+                    <label class="star star-5" for="star-5"></label>
+                    <input class="star star-4" type="radio" id="star-4" name="star" value="4"/>
+                    <label class="star star-4" for="star-4"></label>
+                    <input class="star star-3" type="radio" id="star-3" name="star" value="3"/>
+                    <label class="star star-3" for="star-3"></label>
+                    <input class="star star-2" type="radio" id="star-2" name="star" value="2"/>
+                    <label class="star star-2" for="star-2"></label>
+                    <input class="star star-1" type="radio" id="star-1" name="star" value="1"/>
+                    <label class="star star-1" for="star-1"></label>
+                  </fieldset>
+                  <div class="mb-3">
+                    <label for="comment" class="form-label">Comment:</label>
+                    <textarea name="comment" required class="form-control" id="comment"></textarea>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-dark">
+                      Add Review
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
-        {% endif %}
-      <div></div>
-      <div></div>
       </div>
+    {% endif %}
+
+    <!-- Cart Feedback -->
+    <div id="cart-feedback" class="alert alert-success mt-3" style="display: none;">
+      Added to cart!
     </div>
-    <div id="cart-feedback" class="alert alert-success" style="display: none;">Added to cart!</div>
   </div>
 </div>
 
 <script>
+  // Collapsible reviews
   function openCollapse() {
     const hidden = document.getElementById("hidden");
-    const button = document.getElementById("review-btn");
+    const btn    = document.getElementById("review-btn");
     const showing = hidden.style.display === "block";
     hidden.style.display = showing ? "none" : "block";
-    button.innerHTML = showing ? "<strong>Reviews v</strong>" : "<strong>Reviews ^</strong>";
+    btn.innerHTML = showing
+      ? "<strong>Reviews v</strong>"
+      : "<strong>Reviews ^</strong>";
+  }
+  document.getElementById("review-btn")
+          .addEventListener("click", openCollapse);
+
+  // Size selection
+  let selectedSize = null;
+  document.querySelectorAll('.size-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedSize = btn.dataset.size;
+    });
+  });
+
+  // CSRF helper
+  function getCSRFToken() {
+    return document.cookie.split(';')
+      .map(c => c.trim())
+      .find(c => c.startsWith('csrftoken='))
+      .split('=')[1];
   }
 
-  document.querySelector('.add-to-cart').addEventListener('click', function(event) {
-    event.preventDefault();
+  // Add to cart
+  document.querySelector('.add-to-cart').addEventListener('click', function(e) {
+    e.preventDefault();
+    if (!selectedSize) {
+      return alert('Please select a size.');
+    }
     const shoeId = this.dataset.id;
-
     fetch("{% url 'cart:add_to_cart' %}", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "X-CSRFToken": "{{ csrf_token }}"
+        "X-CSRFToken": getCSRFToken()
       },
-      body: `shoe_id=${shoeId}&quantity=1`
-    }).then(response => {
-      if (response.ok) {
-        const feedback = document.getElementById("cart-feedback");
-        feedback.style.display = "block";
-        setTimeout(() => {
-          feedback.style.display = "none";
-        }, 2000);
+      body: `shoe_id=${shoeId}&size_id=${selectedSize}&quantity=1`
+    })
+    .then(res => {
+      if (res.ok) {
+        const fb = document.getElementById("cart-feedback");
+        fb.style.display = "block";
+        setTimeout(() => fb.style.display = "none", 2000);
       }
-    }).catch(error => console.error("Add to cart error:", error));
+    })
+    .catch(console.error);
   });
 </script>
-{% endblock content %}
+{% endblock %}

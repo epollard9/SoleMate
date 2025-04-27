@@ -5,14 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5335e4d-c2a5-4523-8f14-20649ac38fba" name="Changes" comment="ai">
+      <change afterPath="$PROJECT_DIR$/cart/migrations/0003_alter_cartitem_unique_together_alter_cartitem_size_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart/migrations/0004_add_size_to_cartitem.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart/templates/cart/completed.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart/templates/cart/guest_completed.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart/templates/cart/history.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart/templatetags/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart/templatetags/cart_extras.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop/migrations/0003_shoe_subscribers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoleMate/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoleMate/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/SoleMate/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/templates/cart/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/cart/templates/cart/cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/news/templates/news/news.html" beforeDir="false" afterPath="$PROJECT_DIR$/news/templates/news/news.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/news/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/news/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/shop/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/templates/shop/show.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/show.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/shop/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/shop/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +31,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -54,12 +63,12 @@
     &quot;assignee&quot;: &quot;nm121212&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:epollard9/SoleMate.git",
-    "accountId": "971a48c2-e65f-49f6-973e-624b7cdab2cb"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:epollard9/SoleMate.git&quot;,
+    &quot;accountId&quot;: &quot;971a48c2-e65f-49f6-973e-624b7cdab2cb&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -75,7 +84,7 @@
     "JavaScript Debug.base.html.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "shoeSubscribe",
+    "git-widget-placeholder": "finalCart",
     "last_opened_file_path": "/Users/veganboy/PycharmProjects/SoleMate",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

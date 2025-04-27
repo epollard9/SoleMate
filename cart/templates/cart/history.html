@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load cart_extras %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+  <h2 class="mb-4">Your Purchase History</h2>
+  {% if orders %}
+    {% for order in orders %}
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header d-flex justify-content-between">
+          <span>Order #{{ order.id }}</span>
+          <small class="text-muted">{{ order.created_at|date:"M d, Y H:i" }}</small>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table mb-0 align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Shoe</th>
+                  <th>Size</th>
+                  <th class="text-center">Qty</th>
+                  <th class="text-end">Price</th>
+                  <th class="text-end">Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in order.items.all %}
+                <tr>
+                  <td>{{ item.shoe.name }}</td>
+                  <td>{{ item.size.size_code }}</td>
+                  <td class="text-center">{{ item.quantity }}</td>
+                  <td class="text-end">${{ item.price|floatformat:2 }}</td>
+                  <td class="text-end">${{ item.subtotal|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                <tr class="fw-bold">
+                  <td colspan="4" class="text-end">Order Total:</td>
+                  <td class="text-end">${{ order.total|floatformat:2 }}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-info">
+      You haven’t made any purchases yet.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

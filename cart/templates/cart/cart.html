@@ -1,62 +1,128 @@
+{# cart/templates/cart/cart.html #}
 {% extends 'base.html' %}
 {% load static %}
+{% load cart_extras %}
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="mb-4">Your Cart</h2>
-    {% if cart_items %}
-        <table class="table table-hover align-middle">
-            <thead>
-                <tr>
-                    <th>Shoe</th>
-                    <th>Size</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Subtotal</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cart_items %}
-                <tr>
-                    <td>
-                        <img src="{{ item.shoe.image.url }}" class="img-fluid rounded" width="60" height="60" />
-                        <strong class="ms-2">{{ item.shoe.name }}</strong>
-                    </td>
-                    <td>{{ item.shoe.sizes.first }}</td>
-                    <td>
-                        <input type="number" class="form-control quantity-input" value="{{ item.quantity }}" min="1"
-                               data-id="{{ item.shoe.pk }}">
-                    </td>
-                    <td>${{ item.shoe.price }}</td>
-                    <td>${{ item.subtotal|floatformat:2 }}</td>
-                    <td>
-                        <a href="{% url 'cart:remove_from_cart' item.shoe.pk %}" class="btn btn-outline-danger btn-sm">Remove</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <div class="text-end">
-            <h4>Total: ${{ total|floatformat:2 }}</h4>
-        </div>
-    {% else %}
-        <div class="alert alert-info">Your cart is empty.</div>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Your Cart</h2>
+    {% if user.is_authenticated %}
+      <a href="{% url 'cart:history' %}" class="btn btn-outline-primary">
+        View Order History
+      </a>
     {% endif %}
+  </div>
+
+  {% if cart_items %}
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Shoe</th>
+          <th>Size</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Subtotal</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart_items %}
+        <tr>
+          <td>
+            <img src="{{ item.shoe.image.url }}"
+                 width="60" height="60"
+                 class="rounded" />
+            <strong class="ms-2">{{ item.shoe.name }}</strong>
+          </td>
+          <td>{{ item.size.size_code }}</td>
+          <td>
+            <input type="number"
+                   class="form-control quantity-input"
+                   value="{{ item.quantity }}"
+                   min="1"
+                   data-shoe="{{ item.shoe.pk }}"
+                   data-size="{{ item.size.pk }}">
+          </td>
+          <td>
+            {% if item.shoe.discount > 0 %}
+              <del class="text-muted">
+                ${{ item.shoe.price|floatformat:2 }}
+              </del><br>
+              <span class="text-danger">
+                ${{ item.shoe.discounted_price|floatformat:2 }}
+              </span><br>
+              <small class="text-success">
+                ({{ item.shoe.discount|floatformat:0 }}% off)
+              </small>
+            {% else %}
+              ${{ item.shoe.price|floatformat:2 }}
+            {% endif %}
+          </td>
+          <td>
+            {% if item.shoe.discount > 0 %}
+              ${{ item.quantity|mul:item.shoe.discounted_price|floatformat:2 }}
+            {% else %}
+              ${{ item.subtotal|floatformat:2 }}
+            {% endif %}
+          </td>
+          <td>
+            <a href="{% url 'cart:remove_from_cart' item.shoe.pk item.size.pk %}"
+               class="btn btn-outline-danger btn-sm">
+              Remove
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <form method="post"
+          action="{% url 'cart:checkout' %}"
+          class="row g-3 align-items-center mt-4">
+      {% csrf_token %}
+
+      {% if user.is_authenticated %}
+      <div class="col-auto">
+        <label for="discount_code" class="col-form-label">
+          Discount code:
+        </label>
+      </div>
+      <div class="col-auto">
+        <input type="text"
+               id="discount_code"
+               name="discount_code"
+               class="form-control"
+               placeholder="Enter discount here">
+      </div>
+      {% endif %}
+
+      <div class="col-auto ms-auto text-end">
+        <h4>Total: ${{ total|floatformat:2 }}</h4>
+        <button type="submit" class="btn btn-success">
+          Purchase
+        </button>
+      </div>
+    </form>
+
+  {% else %}
+    <div class="alert alert-info">Your cart is empty.</div>
+  {% endif %}
 </div>
 
 <script>
-document.querySelectorAll('.quantity-input').forEach(input => {
+  // AJAX‐update quantities
+  document.querySelectorAll('.quantity-input').forEach(input => {
     input.addEventListener('change', () => {
-        fetch("{% url 'cart:update_quantity' %}", {
-            method: "POST",
-            headers: {
-                "X-CSRFToken": "{{ csrf_token }}",
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: `shoe_id=${input.dataset.id}&quantity=${input.value}`
-        }).then(() => location.reload());
+      fetch("{% url 'cart:update_quantity' %}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: `shoe_id=${input.dataset.shoe}&size_id=${input.dataset.size}&quantity=${input.value}`
+      }).then(() => location.reload());
     });
-});
+  });
 </script>
 {% endblock %}

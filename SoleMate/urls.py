@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('home.urls')),
     path('shop/',include('shop.urls')),
-    path('cart/', include('cart.urls')),
+    path('cart/', include(('cart.urls', 'cart'), namespace='cart')),
     path('accounts/', include('accounts.urls')),
     path('home/', include('home.urls')),
     path('ai/', include('aihelper.urls')),
