@@ -30,12 +30,12 @@
       {% for shoe in subscribed_shoes %}
       <div class="col-md-4">
         <a href="#" class="text-decoration-none text-dark">
-          <div class="card h-100 shadow-sm border-primary" 
-            style="background-image: url('{% if shoe.image %}{{ shoe.image.url }}{% else %}{% static 'img/coming-soon.png' %}{% endif %}'); 
-                   background-size: cover; 
-                   background-position: center; 
-                   background-repeat: no-repeat; 
-                   border-radius: 12px; 
+          <div class="card h-100 shadow-sm border-primary"
+            style="background-image: url('{% if shoe.image %}{{ shoe.image.url }}{% else %}{% static 'img/coming-soon.png' %}{% endif %}');
+                   background-size: cover;
+                   background-position: center;
+                   background-repeat: no-repeat;
+                   border-radius: 12px;
                    overflow: hidden;">
             <div class="card-body d-flex flex-column justify-content-end" style="background-color: rgba(0,0,0,0.5);">
               <h5 class="card-title text-white mt-2">{{ shoe.name }}</h5>
@@ -60,12 +60,12 @@
       {% for shoe in shoes %}
       <div class="col-md-4">
         <a href="#" class="text-decoration-none text-dark">
-          <div class="card h-100 shadow-sm border-dark" 
-            style="background-image: url('{% if shoe.image %}{{ shoe.image.url }}{% else %}{% static 'img/coming-soon.png' %}{% endif %}'); 
-                   background-size: cover; 
-                   background-position: center; 
-                   background-repeat: no-repeat; 
-                   border-radius: 12px; 
+          <div class="card h-100 shadow-sm border-dark"
+            style="background-image: url('{% if shoe.image %}{{ shoe.image.url }}{% else %}{% static 'img/coming-soon.png' %}{% endif %}');
+                   background-size: cover;
+                   background-position: center;
+                   background-repeat: no-repeat;
+                   border-radius: 12px;
                    overflow: hidden;">
             <div class="card-body d-flex flex-column justify-content-end" style="background-color: rgba(0,0,0,0.5);">
               <h5 class="card-title text-white mt-2">{{ shoe.name }}</h5>
@@ -82,5 +82,16 @@
   </div>
 </section>
 
-
+<!-- FullCalendar Scripts -->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js'></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+      initialView: 'dayGridMonth',
+      events: '/api/shoe-calendar/'
+    });
+    calendar.render();
+  });
+</script>
 {% endblock %}
