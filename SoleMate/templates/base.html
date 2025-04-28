@@ -17,10 +17,10 @@
     <nav class="p-3 navbar navbar-dark bg-dark navbar-expand-lg" style="max-height:80px !important;">
       <div class="container">
         {% if user.is_authenticated%}
-        <a class="navbar-brand" href="{% url 'news' %}" style="{%if count > 0 %}color: red {%else%}color:black{% endif %}">
+        <a class="navbar-brand" href="{% url 'news' %}" style="{%if subscribed > 0 %}color: red {%else%}color:black{% endif %}">
           <div id="notification-bell">
                 <i class="fas fa-bell"></i>
-                <span id="notification-count">{{user.username}}</span>
+                <span id="notification-count">{{subscribed}}</span>
           </div>
         </a>
         {% endif %}
