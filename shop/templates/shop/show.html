@@ -116,31 +116,34 @@
       </div>
     {% endif %}
 
-    <!-- Reviews Collapsible -->
-    <button type="button" id="review-btn" class="collapsible">
-      <strong>Reviews v</strong>
-    </button>
-    <ul class="list-group content" id="hidden" style="background-color: white">
-      {% for review in template_data.reviews %}
-        <li class="list-group-item pb-3 pt-3">
-          <h5>
-            <i class="fa fa-star text-warning"></i>
-            {{ review.rating }} by {{ review.user.username }}
-          </h5>
-          <p>{{ review.comment }}</p>
-          {% if user.is_authenticated and user == review.user %}
-            <a class="btn btn-sm btn-outline-primary"
-               href="{% url 'shop.edit_review' id=template_data.shoe.shoe_number review_id=review.id %}">
-              Edit
-            </a>
-            <a class="btn btn-sm btn-outline-danger"
-               href="{% url 'shop.delete_review' id=template_data.shoe.shoe_number review_id=review.id %}">
-              Delete
-            </a>
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ul>
+    <div class="dropdown-review">
+      <button class="btn dropdown-toggle" type="button" id="reviewDropdown" data-bs-toggle="collapse" data-bs-target="#reviewContent" aria-expanded="false" aria-controls="reviewContent">
+        Reviews
+      </button>
+      
+      <div class="collapse mt-3" id="reviewContent">
+        <ul class="list-group" style="background-color: white">
+          {% for review in template_data.reviews %}
+            <li class="list-group-item pb-3 pt-3">
+              <h5>
+                <i class="fa fa-star text-warning"></i>
+                {{ review.rating }} by {{ review.user.username }}
+              </h5>
+              <p>{{ review.comment }}</p>
+              {% if user.is_authenticated and user == review.user %}
+                <a class="btn btn-sm btn-outline-primary" href="{% url 'shop.edit_review' id=template_data.shoe.shoe_number review_id=review.id %}">
+                  Edit
+                </a>
+                <a class="btn btn-sm btn-outline-danger" href="{% url 'shop.delete_review' id=template_data.shoe.shoe_number review_id=review.id %}">
+                  Delete
+                </a>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div> 
+    </div>
+    
 
     <!-- Add New Review Form -->
     {% if user.is_authenticated %}
@@ -191,17 +194,6 @@
 
 <script>
   // Collapsible reviews
-  function openCollapse() {
-    const hidden = document.getElementById("hidden");
-    const btn    = document.getElementById("review-btn");
-    const showing = hidden.style.display === "block";
-    hidden.style.display = showing ? "none" : "block";
-    btn.innerHTML = showing
-      ? "<strong>Reviews v</strong>"
-      : "<strong>Reviews ^</strong>";
-  }
-  document.getElementById("review-btn")
-          .addEventListener("click", openCollapse);
 
   // Size selection
   let selectedSize = null;

@@ -9,16 +9,6 @@
   </div>
 </section>
 
-<!-- Filters and Search -->
-<section class="news-filters bg-dark py-3">
-  <div class="container d-flex justify-content-between align-items-center">
-    <div class="filter-buttons">
-      <button class="btn btn-light btn-sm me-2">All</button>
-      <button class="btn btn-dark btn-sm me-2">Subscribed</button>
-      <button class="btn btn-dark btn-sm">New Releases</button>
-    </div>
-  </div>
-</section>
 
 
 <!-- Subscribed Shoes Section -->
@@ -29,7 +19,7 @@
     <div class="row g-4">
       {% for shoe in subscribed_shoes %}
       <div class="col-md-4">
-        <a href="#" class="text-decoration-none text-dark">
+        <a href="{% url 'shop.show' id=shoe.shoe_number %}" class="text-decoration-none text-dark">
           <div class="card h-100 shadow-sm border-primary" 
             style="background-image: url('{% if shoe.image %}{{ shoe.image.url }}{% else %}{% static 'img/coming-soon.png' %}{% endif %}'); 
                    background-size: cover; 
@@ -59,7 +49,7 @@
     <div class="row g-4">
       {% for shoe in shoes %}
       <div class="col-md-4">
-        <a href="#" class="text-decoration-none text-dark">
+        <a href="{% url 'shop.show' id=shoe.shoe_number %}" class="text-decoration-none text-dark">
           <div class="card h-100 shadow-sm border-dark" 
             style="background-image: url('{% if shoe.image %}{{ shoe.image.url }}{% else %}{% static 'img/coming-soon.png' %}{% endif %}'); 
                    background-size: cover; 
