@@ -18,7 +18,7 @@ class Shoe(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     release_date = models.DateField()
     sizes = models.ManyToManyField('Size')
-    image = models.ImageField(upload_to='shoe_images/', null=True, blank=True)
+    image = models.ImageField(upload_to='shoe_images/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     subscribers = models.ManyToManyField(User, related_name='subscribed_shoes', blank=True)
 
