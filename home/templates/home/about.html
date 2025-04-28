@@ -1,21 +1,57 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
-<div class="p-3">
+{% block content %}
+
+<!-- Hero Section -->
+<section class="about-hero d-flex align-items-center justify-content-center text-center text-white">
   <div class="container">
-    <div class="row mt-3">
-      <div class="col-md-6 mx-auto mb-3">
-        <h2>About</h2>
-        <hr />
-        <p>At SoleMate, we offer an extensive online catalog of shoes for users to purchase and a platform for shoe enthusiasts to
-            sell their shoes. No login required to use the basic features of this site. However, to receive all the fun perks and
-            features, you must create an account. To become a seller you need to apply for it.</p>
-        <p>Discover the next shoe for you!</p>
+    <h1 class="display-4 fw-bold">About SoleMate</h1>
+    <p class="lead mt-3">Want to Buy the latest new sneaker, Sell a one of a kind shoe? SoleMate is the one stop shop to it all</p>
+    <a href="{% url 'shop.index' %}" class="btn btn-explore mt-4">Explore Shoes</a>
+  </div>
+</section>
+
+<!-- Our Story Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <img src="{% static 'img/logo.jpg' %}" class="img-fluid rounded-4 shadow-lg" alt="Our Story">
       </div>
-      <div class="col-md-6 mx-auto mb-3 text-center">
-        <img src="{% static 'img/Blue_shoes.png' %}" class="max-width-100" alt="about" />
+      <div class="col-lg-6">
+        <h2 class="fw-bold mb-4">Our Story</h2>
+        <p class="text-muted">Founded by passionate sneakerheads, SoleMate was born out of a simple idea: make the best, most exclusive sneakers accessible to everyone. We blend the latest drops, iconic classics, and must-have styles into one platform designed with YOU in mind.</p>
+        <p class="text-muted">Checkout our AI assistant tailored to find the best shoes for you. We also offer unique access to video reviews on shoes to help you know exactly what you're buying. Whether you want buy, sell, or learn about shoes, compete, or just learn about the latest sneakers— SoleMate is built for you.</p>
       </div>
     </div>
   </div>
-</div>
-{% endblock content %}
+</section>
+
+<!-- Our Mission Section -->
+<section class="py-5 bg-black text-white">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-4">Our Unique Offers</h2>
+    <p class="lead">Fueling your passion for the perfect step.  
+    <br />Empowering sneaker culture one pair at a time.</p>
+    <div class="row mt-5">
+      <div class="col-md-4">
+        <i class="fas fa-fire fa-3x mb-3"></i>
+        <h5>Exclusive Drops</h5>
+        <p class="small">We bring the 🔥 hottest releases directly to your feed.</p>
+      </div>
+      <div class="col-md-4">
+        <i class="fas fa-users fa-3x mb-3"></i>
+        <h5>Built for Community</h5>
+        <p class="small">Not just a store — you can also sell your own shoes and reviews pairs you've purchased</p>
+      </div>
+      <div class="col-md-4">
+        <i class="fas fa-star fa-3x mb-3"></i>
+        <h5>Curated for You</h5>
+        <p class="small">Our AI assistant offers handpicked collections tailored to your vibe and lifestyle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

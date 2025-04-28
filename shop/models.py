@@ -19,7 +19,7 @@ class Shoe(models.Model):
     release_date = models.DateField()
     last_edit = models.DateField()
     sizes = models.ManyToManyField('Size')
-    image = models.ImageField(upload_to='shoe_images/', null=True, blank=True)
+    image = models.ImageField(upload_to='shoe_images/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     subscribers = models.ManyToManyField(User, related_name='subscribed_shoes', blank=True)
 

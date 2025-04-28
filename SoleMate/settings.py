@@ -105,3 +105,7 @@ if dotenv_path.exists():
 OPENAI_API_KEY = "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"
 OPENAI_API_BASE = "https://openrouter.ai/api/v1"
 
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

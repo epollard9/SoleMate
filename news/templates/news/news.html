@@ -1,55 +1,86 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<div class="container mt-5 mb-5" style="min-height: 100vh;">
 
-    <!-- Subscribed Shoes Section -->
-    {% if subscribed_shoes %}
-    <h2 class="mb-4">Your Recently Updated Subscribed Shoes</h2>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
-        {% for shoe in subscribed_shoes %}
-        <div class="col">
-            <div class="card h-100 shadow-sm border-primary">
-                {% if shoe.image %}
-                <img src="{{ shoe.image.url }}" class="card-img-top" alt="{{ shoe.name }}">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ shoe.name }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ shoe.brand }}</h6>
-                    <p><strong>Release Date:</strong> {{ shoe.release_date }}</p>
-                    <p><strong>Price:</strong> ${{ shoe.price }}</p>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+<!-- Hero Section -->
+<section class="news-hero text-center text-white py-5" style="background-color: black;">
+  <div class="container">
+    <h1 class="display-4 fw-bold">SOLEMATE NEWSROOM</h1>
+  </div>
+</section>
+
+<!-- Filters and Search -->
+<section class="news-filters bg-dark py-3">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div class="filter-buttons">
+      <button class="btn btn-light btn-sm me-2">All</button>
+      <button class="btn btn-dark btn-sm me-2">Subscribed</button>
+      <button class="btn btn-dark btn-sm">New Releases</button>
     </div>
-    {% endif %}
+  </div>
+</section>
 
-    <!-- Upcoming Sneaker Releases -->
+
+<!-- Subscribed Shoes Section -->
+{% if subscribed_shoes %}
+<section class="py-5">
+  <div class="container">
+    <h2 class="mb-4">Your Subscribed Shoes</h2>
+    <div class="row g-4">
+      {% for shoe in subscribed_shoes %}
+      <div class="col-md-4">
+        <a href="#" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm border-primary"
+            style="background-image: url('{% if shoe.image %}{{ shoe.image.url }}{% else %}{% static 'img/coming-soon.png' %}{% endif %}');
+                   background-size: cover;
+                   background-position: center;
+                   background-repeat: no-repeat;
+                   border-radius: 12px;
+                   overflow: hidden;">
+            <div class="card-body d-flex flex-column justify-content-end" style="background-color: rgba(0,0,0,0.5);">
+              <h5 class="card-title text-white mt-2">{{ shoe.name }}</h5>
+              <p class="text-white">{{ shoe.release_date }}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+<!-- Upcoming Sneaker Releases Section -->
+<section class="py-5">
+  <div class="container">
     <h2 class="mb-4">Upcoming Sneaker Releases</h2>
     {% if shoes %}
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            {% for shoe in shoes %}
-            <div class="col">
-                <div class="card h-100 shadow-sm border-dark">
-                    {% if shoe.image %}
-                    <img src="{{ shoe.image.url }}" class="card-img-top" alt="{{ shoe.name }}">
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ shoe.name }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{{ shoe.brand }}</h6>
-                        <p class="card-text">{{ shoe.description|default:"No description provided." }}</p>
-                        <p><strong>Release Date:</strong> {{ shoe.release_date }}</p>
-                        <p><strong>Price:</strong> ${{ shoe.price }}</p>
-                    </div>
-                </div>
+    <div class="row g-4">
+      {% for shoe in shoes %}
+      <div class="col-md-4">
+        <a href="#" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm border-dark"
+            style="background-image: url('{% if shoe.image %}{{ shoe.image.url }}{% else %}{% static 'img/coming-soon.png' %}{% endif %}');
+                   background-size: cover;
+                   background-position: center;
+                   background-repeat: no-repeat;
+                   border-radius: 12px;
+                   overflow: hidden;">
+            <div class="card-body d-flex flex-column justify-content-end" style="background-color: rgba(0,0,0,0.5);">
+              <h5 class="card-title text-white mt-2">{{ shoe.name }}</h5>
+              <p class="text-white">{{ shoe.release_date }}</p>
             </div>
-            {% endfor %}
-        </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
     {% else %}
-        <p>No upcoming releases found.</p>
+    <p>No upcoming releases found.</p>
     {% endif %}
-
-</div>
+  </div>
+</section>
 
 <!-- FullCalendar Scripts -->
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
