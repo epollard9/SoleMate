@@ -99,7 +99,7 @@ def edit_shoe_entry(request, id):
         shoe.name = request.POST['shoe_name']
         shoe.price = request.POST['shoe_price']
         shoe.description = request.POST['shoe_description']
-        shoe.image = request.POST['imageUpload']
+        shoe.image = request.FILES['imageUpload']
         shoe.last_edit = localdate()
         shoe.save()
         for key, values in request.POST.lists():
@@ -124,7 +124,7 @@ def create_shoe(request):
         shoe.brand = "Sneaker Enthusiast " + request.user.username
         shoe.price = request.POST['shoe_price']
         shoe.description = request.POST['shoe_description']
-        shoe.image = request.POST['imageUpload']
+        shoe.image = request.FILES['imageUpload']
         shoe.shoe_number = str(max+1)
         shoe.release_date = localdate()
         shoe.last_edit = localdate()
