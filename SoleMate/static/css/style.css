@@ -252,3 +252,159 @@
 }
 
 
+/* ================= AI Assistant Styles ================= */
+
+/* Floating Button */
+.button-corner button {
+  background-color: #000;
+  color: white;
+  border: 2px solid white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-weight: 600;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease-in-out;
+  font-size: 16px;
+}
+.button-corner button:hover {
+  background-color: #f0c14b;
+  color: black;
+  transform: scale(1.08);
+  box-shadow: 0 0 15px #f0c14b;
+}
+
+/* ========== AI Assistant Clean Chat Upgrade ========== */
+
+#aibox {
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  border: 2px solid #dee2e6;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 95%;
+  padding: 20px;
+  position: fixed;
+  bottom: 100px;
+  right: 50px;
+  z-index: 999;
+  animation: fadeInUp 0.5s ease;
+}
+
+#aibox h4 {
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #212529;
+}
+
+#ai-input {
+  border-radius: 12px;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  font-size: 14px;
+  resize: none;
+  min-height: 60px;
+  width: 100%;
+  margin-bottom: 12px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+#aibox button {
+  background-color: #000000 !important;
+  color: #ffffff;
+  border: 2px solid #000000;
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 30px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#aibox button:hover {
+  background-color: #333333;
+  transform: scale(1.05);
+}
+
+#ai-response, .ai-response {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 15px;
+  min-height: 100px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #212529;
+  overflow-y: auto;
+  max-height: 300px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  white-space: pre-wrap;
+  border: 2px solid #ccc; /* Make the border darker */
+}
+
+#aibox button.ask-button {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 999px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  margin-top: 5px;
+}
+#aibox button.ask-button:hover {
+  background-color: #f0c14b;
+  color: black;
+}
+
+/* --- AI Assistant Box Styles --- */
+
+#aibox {
+  position: fixed;
+  bottom: 90px; /* Leaves space above the floating button */
+  right: 20px;
+  width: 350px;
+  background: #ffffff;
+  border: 2px solid #000;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  z-index: 1050; /* high so it sits on top */
+}
+
+/* Close button inside the AI box */
+#aibox .btn-close {
+  background: none;
+  border: none;
+}
+
+/* Textarea inside the AI box */
+#aibox textarea {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  resize: none;
+}
+
+/* AI Assistant Response Area */
+#ai-response {
+  background-color: #f9f9f9;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+
+/* Smooth Fade */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+
