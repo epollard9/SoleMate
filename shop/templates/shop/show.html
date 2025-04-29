@@ -82,6 +82,11 @@
            data-id="{{ template_data.shoe.shoe_number }}">
           Add to Cart
         </a>
+        {% if template_data.seller%}
+        <a href="{% url 'shop.edit_shoe' id=template_data.shoe.shoe_number %}" class="btn btn-secondary add-to-cart">
+          Edit Listing
+        </a>
+        {% endif %}
         <hr />
 
         <!-- Subscription Logic -->

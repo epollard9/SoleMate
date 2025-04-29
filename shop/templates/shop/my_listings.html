@@ -1,117 +1,40 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
-<style>
-  .container {
-  display: grid;
-  grid-template-areas:
-    "header header"
-    "menu content"
-    "footer footer";
-  grid-template-columns: 1fr 3fr;
-  padding: 2px;
-}
-.container > div {
-  padding: 0px;
-}
-.container > div.header {
-  background-color: #6ab43e;
-  grid-area: header;
-  text-align: center;
-}
-.container > div.menu {
-  grid-area: menu;
-  border-right: 2px solid black;
-  min-height: 66vh;
-}
-.container > div.content {
-  grid-area: content;
-  padding-top: 30px !important;
-}
-.container > div.footer {
-  background-color: #2E2E2E;
-  grid-area: footer;
-}
+{% block content %}
 
-</style>
+<!-- Hero Section -->
+<section class="news-hero text-center text-white py-5" style="background-color: black;">
   <div class="container">
-    <div class="menu">
-      <div class="row mt-3">
-        <div class="col mx-auto mb-3">
-          <h2>Filters</h2>
-          <hr />
-          <p class="card-text">
-          <form method="GET">
-            <fieldset id="size">
-              <legend>Size:</legend>
-              {% for size in template_data.sizes %}
-              <input type="radio" id="{{size}}" name="sizeFilter" value="{{size}}"><label for="{{size}}">{{size}}</label><br>
-              {% endfor %}
-            </fieldset>
-          <fieldset id ="price">
-            <legend>Price:</legend>
-            <input type="radio" id="20" name="priceFilter" value="20"><label for="20"> < $20</label><br>
-            <input type="radio" id="40" name="priceFilter" value="40"><label for="40"> < $40</label><br>
-            <input type="radio" id="60" name="priceFilter" value="60"><label for="60"> < $60</label><br>
-            <input type="radio" id="80" name="priceFilter" value="80"><label for="80"> < $80</label><br>
-            <input type="radio" id="100" name="priceFilter" value="100"><label for="100"> < $100</label><br>
-          </fieldset>
-          <fieldset id="brand">
-            <legend>Brand:</legend>
-            {% for shoe in template_data.brands %}
-            <div class="row">
-              <span>
-                <input type="checkbox" id={{shoe.brand}} name="brandFilter" value={{shoe.brand}}> <label for={{shoe.brand}}> {{shoe.brand}}</label>
-              </span>
-            </div>
-          {% endfor %}
-          </fieldset>
-          <input type="submit" value="Search">
-          </form>
-          </p>
-            {% if user.is_authenticated %}
-            <a class = "nav-link" href="{% url 'shop.sell' %}"> Sell shoe</a>
-            {% endif %}
-        </div>
-      </div>
-    </div>
-    <div class="content" style=" min-height:70vh; max-height:100vh; overflow-y: scroll !important; overflow-x:hidden; padding-left: 10px !important; padding-right: 10px !important;" >
-        <h2>
-            <div class="navbar-nav ms-auto navbar-ml">
-                <a class="nav-link" href="{% url 'shop.index' %}">Brand Shoes</a> <a class="nav-link" href="{% url 'shop.seller' %}">Member Shoes</a>
-            </div>
-        </h2>
-        <div class = "row">
-        <form method="GET">
-            <div class="row" style="padding-bottom: 15px;">
-              <div class="col-auto">
-                <div class="input-group col-auto">
-                  <div class="input-group-text">Search</div>
-                  <input type="text" class="form-control" name="search">
-                  </div>
-                  </div>
-                <div class="col-auto"><button class="btn bg-dark text-black" type="submit">Search</button>
+    <h1 class="display-4 fw-bold">Your Shoes</h1>
+  </div>
+</section>
+
+
+
+  <!-- Subscribed Shoes Section -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="mb-4">Your Listed Shoes</h2>
+      <div class="row g-4">
+        {% for shoe in template_data.shoes %}
+        <div class="col-md-4">
+          <a href="{% url 'shop.show' id=shoe.shoe_number %}" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm border-primary"
+              style="background-image: url('{% if shoe.image %}{{ shoe.image.url }}{% else %}{% static 'img/coming-soon.png' %}{% endif %}');
+                     background-size: cover;
+                     background-position: center;
+                     background-repeat: no-repeat;
+                     border-radius: 12px;
+                     overflow: hidden;">
+              <div class="card-body d-flex flex-column justify-content-end" style="background-color: rgba(0,0,0,0.5);">
+                <h5 class="card-title text-white mt-2">{{ shoe.name }}</h5>
+                <p class="text-white">{{ shoe.release_date }}</p>
               </div>
             </div>
-        </form>
-        {% for shoe in template_data.shoes %}
-        <div class="col-md-4 col-lg-3" style="padding: 10px">
-          <div class="card align-items-center pt-4" style="padding-top:0px !important; text-align: left !important; padding-bottom: 0px !important;">
-            {% if shoe.image %}
-            <img src="{{ shoe.image.url }}" class="card-img-top" style="width: fit-content; height: 20vh;">
-            {% else %}
-             <div class="card-img-top d-flex align-items-center justify-content-center bg-light text-muted" style="height: 20vh;">
-            <em>No image</em>
-          </div>
-          {% endif %}
-            <div class="card-body" style="padding-bottom: 0px; margin-left: 2px">
-              <p class="card-title" style="padding-left: 5px;"> {{shoe.name}} </p>
-              <a style="width:225px" href="{% url 'shop.edit_shoe' id=shoe.shoe_number %}" class="btn bg-dark "> {{ shoe.name }} </a>
-            </div>
-          </div>
+          </a>
         </div>
         {% endfor %}
       </div>
     </div>
-  </div>
-{% endblock content %}
+  </section>
+{% endblock %}

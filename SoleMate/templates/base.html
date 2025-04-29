@@ -77,6 +77,7 @@
             <a class="nav-link bg-dark" href="{% url 'cart:view_cart' %}">
               Cart{% if cart_item_count > 0 %} ({{ cart_item_count }}){% endif %}
             </a>
+            <div style="background-color: black; height: 50px; width:2px"></div>
             <div class="vr bg-light mx-2 d-none d-lg-block"></div>
             {% if user.is_authenticated %}
               <a

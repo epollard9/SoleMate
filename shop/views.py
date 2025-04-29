@@ -28,7 +28,7 @@ def index(request):
     size_term = request.GET.get('sizeFilter')
     brand_term = request.GET.get('brandFilter')
     price_term = request.GET.get('priceFilter')
-    shoes = Shoe.objects.exclude(brand__icontains="Sneaker Enthusiast")
+    shoes = Shoe.objects.all()
     if search_term:
         shoes = Shoe.objects.filter(name__icontains=search_term)
     if size_term:
@@ -37,13 +37,12 @@ def index(request):
         shoes = Shoe.objects.filter(brand__icontains=brand_term)
     if price_term:
         shoes = Shoe.objects.filter(price__lte=price_term)
-    shoes = shoes.exclude(brand__icontains="Sneaker Enthusiast")
 
     template_data = {}
     template_data['title'] = 'Shoes'
     template_data['shoes'] = shoes
     template_data['sizes'] = Size.objects.all()
-    template_data['brands'] = Shoe.objects.exclude(brand__icontains="Sneaker Enthusiast")
+    template_data['brands'] = Shoe.objects.all().values_list("brand", flat=True).distinct()
     return render(request, 'shop/index.html',
                   {'template_data': template_data})
 
@@ -64,7 +63,9 @@ def sell(request):
 def show(request, id):
     shoe = get_object_or_404(Shoe, shoe_number=id)
     reviews = Review.objects.filter(shoe=shoe)
-
+    seller = False
+    if shoe.seller == request.user.username:
+        seller = True
 
     video_url = get_youtube_review_video(shoe.name)
 
@@ -74,13 +75,14 @@ def show(request, id):
         'sizes': Size.objects.all(),
         'reviews': reviews,
         'youtube_video_url': video_url,
+        'seller': seller,
     }
     return render(request, 'shop/show.html', {'template_data': template_data})
 
 def my_listings(request):
     template_data={}
-    name = "Sneaker Enthusiast " + request.user.username
-    template_data['shoes'] = Shoe.objects.filter(brand__icontains =name)
+    name = request.user.username
+    template_data['shoes'] = Shoe.objects.filter(seller__icontains =name)
     return render(request, 'shop/my_listings.html', {'template_data': template_data})
 
 def edit_shoe(request, id):
@@ -101,6 +103,7 @@ def edit_shoe_entry(request, id):
         shoe.description = request.POST['shoe_description']
         shoe.image = request.FILES['imageUpload']
         shoe.last_edit = localdate()
+        shoe.brand = request.POST['shoe_brand']
         shoe.save()
         for key, values in request.POST.lists():
             if key == "sizes":
@@ -121,7 +124,8 @@ def create_shoe(request):
     if request.method == 'POST':
         shoe = Shoe()
         shoe.name = request.POST['shoe_name']
-        shoe.brand = "Sneaker Enthusiast " + request.user.username
+        shoe.seller = request.user.username
+        shoe.brand = request.POST['shoe_brand']
         shoe.price = request.POST['shoe_price']
         shoe.description = request.POST['shoe_description']
         shoe.image = request.FILES['imageUpload']

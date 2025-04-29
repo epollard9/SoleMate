@@ -15,6 +15,7 @@ class Shoe(models.Model):
     shoe_number = models.CharField(max_length=10, primary_key=True)
     name = models.CharField(max_length=100)
     brand = models.CharField(max_length=50)
+    seller = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     release_date = models.DateField()
     last_edit = models.DateField()

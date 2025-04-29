@@ -2,40 +2,43 @@
 {% block content %}
 {% load static %}
 
-<div class="p-3" style="overflow-y: visible !important">
-  <div class="container mt-4" style="margin-top: 5px !important; margin-bottom:10px !important;overflow-y: visible !important;">
+<div class="sell-shoe-page">
+  <div class="container mt-4">
     <div class="row justify-content-center">
-      <div class="col-12">
-        <div class="card shadow p-3 mb-4 rounded">
-          <div class="card-body">
-            <form method="POST" action="{% url 'shop.edit_shoe_entry' id=template_data.shoe.shoe_number %}">
-              {% csrf_token %}
-              <p>
-              <div>
-                <label for="shoe_name">Name:</label><br>
-                <input type="text" id="shoe_name" name="shoe_name" aria-placeholder="{{shoe.name}}"><br>
-              <label for="shoe_price">Price:</label><br>
-                $<input type="text" id="shoe_price" name="shoe_price"><br>
-              <label for="shoe_description">Description:</label><br>
-                <textarea name="shoe_description" required class="form-control" id="shoe_description"></textarea>
-              <label for="imageUpload">Choose an image:</label>
-              <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
-              {% for size in template_data.sizes %}
-              <div class="row">
-                <span>
-                  <input type="checkbox" id={{size}} name="sizes" value={{size}}> <label for={{size}}> {{size}}</label>
-                </span>
-              </div>
-              {% endfor %}
-              </div>
-              </p>
-              <div class="text-center">
-                <button type="submit" class="btn bg-dark text-white">
-                  Sell shoe!
-                </button>
-              </div>
-            </form>
-          </div>
+      <div class="col-md-8 col-lg-6">
+        <div class="sell-shoe-card">
+          <h2>Edit Your Kicks</h2>
+          <form method="POST" action="{% url 'shop.edit_shoe_entry' id=template_data.shoe.shoe_number %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="shoe_name">Name:</label>
+            <input type="text" id="shoe_name" name="shoe_name" required>
+
+            <label for="shoe_brand">Brand:</label>
+            <input type="text" id="shoe_brand" name="shoe_brand" required>
+
+            <label for="shoe_price">Price:</label>
+            <input type="text" id="shoe_price" name="shoe_price" required>
+
+            <label for="shoe_description">Description:</label>
+            <textarea name="shoe_description" id="shoe_description" rows="3" required></textarea>
+
+            <label for="imageUpload">Choose an image:</label>
+            <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
+
+            <label>Available Sizes:</label>
+            {% for size in template_data.sizes %}
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="{{size}}" name="sizes" value="{{size}}">
+              <label class="form-check-label" for="{{size}}">{{size}}</label>
+            </div>
+            {% endfor %}
+
+            <div class="text-center mt-4">
+              <button type="submit">Edit shoe!</button>
+            </div>
+
+          </form>
         </div>
       </div>
     </div>
