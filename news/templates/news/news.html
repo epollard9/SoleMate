@@ -72,6 +72,38 @@
   </div>
 </section>
 
+
+<!-- Upcoming News Section -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="mb-4">Upcoming News</h2>
+    {% if calendar_entries %}
+    <div class="row g-4">
+      {% for entry in calendar_entries %}
+      <div class="col-md-4">
+          <div class="card h-100 shadow-sm border-dark"
+            style="background-image: url('{% if entry.image %}{{ entry.image.url }}{% else %}{% static 'img/coming-soon.png' %}{% endif %}');
+                   background-size: cover;
+                   background-position: center;
+                   background-repeat: no-repeat;
+                   border-radius: 12px;
+                   overflow: hidden;">
+            <div class="card-body d-flex flex-column justify-content-end" style="background-color: rgba(0,0,0,0.5);">
+              <h5 class="card-title text-white mt-2">{{ entry.name }}</h5>
+              <p class="text-white">{{ entry.description}}</p>>
+              <p class="text-white">{{ entry.date }}</p>
+            </div>
+          </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>No upcoming releases found.</p>
+    {% endif %}
+  </div>
+</section>
+
+
 <!-- FullCalendar Scripts -->
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js'></script>

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Shoe, Size, Order, OrderItem
+from .models import Shoe, Size, Order, OrderItem, Discount
 
 @admin.register(Shoe)
 class ShoeAdmin(admin.ModelAdmin):
@@ -30,3 +30,8 @@ from .models import Review
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('shoe', 'user', 'rating', 'created_at')
     search_fields = ('shoe__shoe_number', 'user__username', 'comment')
+
+@admin.register(Discount)
+class DiscountAdmin(admin.ModelAdmin):
+    list_display = ['discount_code']
+    search_fields = ['discount_code']
