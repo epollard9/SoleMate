@@ -185,11 +185,11 @@ def completed(request, order_id):
     # 2) figure discount amount & final total
     discount_amount = Decimal('0.00')
     discount = Discount.objects.filter(discount_code__icontains=order.discount_code)
-    if (discount):
+    if (order.discount_code):
         discount = discount.values_list('discount_percent', flat=True)[0]
+        discount_amount = (raw_total * discount).quantize(Decimal('.01'))
     else:
-        discount= Decimal('0.00')
-    discount_amount = (raw_total * discount).quantize(Decimal('.01'))
+        discount_amount = 0
     final_total = (raw_total - discount_amount).quantize(Decimal('0.01'))
 
     # 3) pass into template
