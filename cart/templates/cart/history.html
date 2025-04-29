@@ -1,3 +1,4 @@
+{# cart/templates/cart/history.html #}
 {% extends 'base.html' %}
 {% load cart_extras %}
 
@@ -19,7 +20,7 @@
                   <th>Shoe</th>
                   <th>Size</th>
                   <th class="text-center">Qty</th>
-                  <th class="text-end">Price</th>
+                  <th class="text-end">Unit Price</th>
                   <th class="text-end">Subtotal</th>
                 </tr>
               </thead>
@@ -35,8 +36,21 @@
                 {% endfor %}
               </tbody>
               <tfoot>
+                {# Original total #}
+                <tr>
+                  <td colspan="4" class="text-end">Original total:</td>
+                  <td class="text-end">${{ order.raw_total|floatformat:2 }}</td>
+                </tr>
+                {# Discount row, if any #}
+                {% if order.discount_amount > 0 %}
+                <tr>
+                  <td colspan="4" class="text-end text-success">Discount (15%):</td>
+                  <td class="text-end text-success">−${{ order.discount_amount|floatformat:2 }}</td>
+                </tr>
+                {% endif %}
+                {# Final total #}
                 <tr class="fw-bold">
-                  <td colspan="4" class="text-end">Order Total:</td>
+                  <td colspan="4" class="text-end">Final total:</td>
                   <td class="text-end">${{ order.total|floatformat:2 }}</td>
                 </tr>
               </tfoot>

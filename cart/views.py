@@ -1,34 +1,27 @@
 from decimal import Decimal
-from django.shortcuts             import render, redirect, get_object_or_404
-from django.http                  import JsonResponse
-from django.db.models             import Sum
-from django.urls                  import reverse
-from .models                      import CartItem, Order, OrderItem
-from shop.models                  import Shoe, Size
+from django.shortcuts              import render, redirect, get_object_or_404
+from django.http                   import JsonResponse
+from django.db.models              import Sum
+from django.urls                   import reverse
 from django.contrib.auth.decorators import login_required
 
+from .models                       import CartItem, Order, OrderItem
+from shop.models                   import Shoe, Size
+
 def detail(request):
-    """
-    Renders the cart page. Supports both authenticated users (DB-backed)
-    and anonymous users (session-backed), discarding any malformed session keys.
-    """
+    """Show cart for both logged-in users and guests."""
     if request.user.is_authenticated:
         items = list(CartItem.objects.filter(user=request.user))
     else:
-        raw_cart = request.session.get('cart', {})
-        valid_cart = {}
-        for key, qty in raw_cart.items():
-            if key.count(':') == 1:
-                valid_cart[key] = qty
-        request.session['cart'] = valid_cart
-
+        raw = request.session.get('cart', {})
+        valid = {k: v for k, v in raw.items() if k.count(':') == 1}
+        request.session['cart'] = valid
         items = []
-        for key, qty in valid_cart.items():
+        for key, qty in valid.items():
             shoe_id, size_id = key.split(':')
             shoe = get_object_or_404(Shoe, pk=shoe_id)
             size = get_object_or_404(Size, pk=size_id)
-            anon = CartItem(user=None, shoe=shoe, size=size, quantity=qty)
-            items.append(anon)
+            items.append(CartItem(user=None, shoe=shoe, size=size, quantity=qty))
 
     total = Decimal('0.00')
     for item in items:
@@ -42,30 +35,29 @@ def detail(request):
 
     return render(request, 'cart/cart.html', {
         'cart_items': items,
-        'total': total,
+        'total':      total,
     })
 
 
 def add_to_cart(request):
-    shoe_id  = request.POST.get('shoe_id')
-    size_id  = request.POST.get('size_id')
+    """AJAX add-to-cart."""
+    shoe_id  = request.POST['shoe_id']
+    size_id  = request.POST['size_id']
     quantity = int(request.POST.get('quantity', 1))
     shoe     = get_object_or_404(Shoe, pk=shoe_id)
     size     = get_object_or_404(Size, pk=size_id)
 
     if request.user.is_authenticated:
-        cart_item, created = CartItem.objects.get_or_create(
+        ci, created = CartItem.objects.get_or_create(
             user=request.user,
             shoe=shoe,
             size=size,
             defaults={'quantity': quantity}
         )
         if not created:
-            cart_item.quantity += quantity
-            cart_item.save()
-        count = CartItem.objects.filter(user=request.user).aggregate(
-            total=Sum('quantity')
-        )['total'] or 0
+            ci.quantity += quantity
+            ci.save()
+        count = CartItem.objects.filter(user=request.user).aggregate(total=Sum('quantity'))['total'] or 0
     else:
         cart = request.session.get('cart', {})
         key  = f"{shoe_id}:{size_id}"
@@ -77,6 +69,7 @@ def add_to_cart(request):
 
 
 def update_quantity(request):
+    """AJAX update quantity."""
     shoe = get_object_or_404(Shoe, pk=request.POST['shoe_id'])
     size = get_object_or_404(Size, pk=request.POST['size_id'])
     qty  = int(request.POST['quantity'])
@@ -94,6 +87,7 @@ def update_quantity(request):
 
 
 def remove_from_cart(request, shoe_id, size_id):
+    """Remove one line from cart."""
     shoe = get_object_or_404(Shoe, pk=shoe_id)
     size = get_object_or_404(Size, pk=size_id)
     if request.user.is_authenticated:
@@ -102,26 +96,31 @@ def remove_from_cart(request, shoe_id, size_id):
         cart = request.session.get('cart', {})
         cart.pop(f"{shoe_id}:{size_id}", None)
         request.session['cart'] = cart
+
     return redirect('cart:view_cart')
 
 
 def checkout(request):
     """
-    POST-only: for logged-in users creates an order and redirects to /completed/,
-    for guests calculates total and shows the guest completion page.
+    POST-only:
+    - Logged-in: create Order (+ items), record discount, redirect to completed.
+    - Guest: compute total, clear session → guest_completed.
     """
     if request.method != 'POST':
         return redirect('cart:view_cart')
 
-    # First, collect cart items & compute total
+    # --- Logged-in checkout ---
     if request.user.is_authenticated:
-        # logged-in flow
-        discount_code = request.POST.get('discount_code', '').strip().upper()
+        code       = request.POST.get('discount_code', '').strip().upper()
         cart_items = CartItem.objects.filter(user=request.user)
         if not cart_items.exists():
             return redirect('cart:view_cart')
 
-        order = Order.objects.create(user=request.user)
+        # create order + items
+        order = Order.objects.create(
+            user=request.user,
+            discount_code=(code if code == 'SOLEMATE15' else None)
+        )
         for ci in cart_items:
             OrderItem.objects.create(
                 order=order,
@@ -132,75 +131,101 @@ def checkout(request):
             )
         cart_items.delete()
 
-        # build redirect with code if valid
-        url = reverse('cart:completed', args=[order.id])
-        if discount_code == 'SOLEMATE15':
-            url += '?code=SOLEMATE15'
-        return redirect(url)
+        # redirect w/ no GET-param (we read from order.discount_code)
+        return redirect('cart:completed', order_id=order.id)
 
-    else:
-        # guest flow
-        raw_cart = request.session.get('cart', {})
-        total = Decimal('0.00')
-        for key, qty in raw_cart.items():
-            shoe_id, size_id = key.split(':')
-            shoe = get_object_or_404(Shoe, pk=shoe_id)
-            # apply per‐item discount if any
-            unit_price = (
-                shoe.discounted_price
-                if getattr(shoe, 'discount', 0) > 0
-                else shoe.price
-            )
-            total += unit_price * qty
+    # --- Guest checkout ---
+    raw_cart = request.session.get('cart', {})
+    total    = Decimal('0.00')
+    for key, qty in raw_cart.items():
+        shoe_id, _ = key.split(':')
+        shoe = get_object_or_404(Shoe, pk=shoe_id)
+        unit_price = (
+            shoe.discounted_price
+            if getattr(shoe, 'discount', 0) > 0
+            else shoe.price
+        )
+        total += unit_price * qty
 
-        # clear session cart
-        request.session['cart'] = {}
+    request.session['cart'] = {}
+    return render(request, 'cart/guest_completed.html', {
+        'total': total,
+    })
 
-        return render(request, 'cart/guest_completed.html', {
-            'total': total,
-        })
 
+# cart/views.py
+from decimal import Decimal
+from django.shortcuts              import render, redirect, get_object_or_404
+from django.http                   import JsonResponse
+from django.db.models              import Sum
+from django.urls                   import reverse
+from django.contrib.auth.decorators import login_required
+
+from .models                       import CartItem, Order, OrderItem
+from shop.models                   import Shoe, Size
 
 @login_required
 def completed(request, order_id):
     """
     Renders the order completion page for authenticated users,
-    applies per‐item discounts and a 15% promo if ?code=SOLEMATE15 was passed.
+    showing original total, discount applied, and final total.
     """
     order = get_object_or_404(Order, id=order_id, user=request.user)
 
-    total = Decimal('0.00')
+    # 1) compute the raw (per-item) total
+    raw_total = Decimal('0.00')
     for item in order.items.select_related('shoe'):
         unit_price = (
             item.shoe.discounted_price
             if getattr(item.shoe, 'discount', 0) > 0
             else item.price
         )
-        total += unit_price * item.quantity
+        raw_total += unit_price * item.quantity
 
-    if request.GET.get('code') == 'SOLEMATE15':
-        total = (total * Decimal('0.85')).quantize(Decimal('0.01'))
+    # 2) figure discount amount & final total
+    discount_amount = Decimal('0.00')
+    if order.discount_code == 'SOLEMATE15':
+        discount_amount = (raw_total * Decimal('0.15')).quantize(Decimal('0.01'))
+    final_total = (raw_total - discount_amount).quantize(Decimal('0.01'))
 
-    discount_codes = ['SOLEMATE15']
-
+    # 3) pass into template
     return render(request, 'cart/completed.html', {
-        'order_id':       order_id,
-        'total':          total,
-        'discount_codes': discount_codes,
+        'order_id':       order.id,
+        'raw_total':      raw_total,
+        'discount_amount': discount_amount,
+        'total':          final_total,
+        'discount_codes': ['SOLEMATE15'],  # for the “Your available codes” box
     })
 
 
 @login_required
 def history(request):
+    """
+    List all past orders for the user, showing for each:
+    - original total
+    - discount (if any)
+    - final total
+    """
     orders = (
         Order.objects.filter(user=request.user)
         .order_by('-created_at')
         .prefetch_related('items__shoe', 'items__size')
     )
+
     for order in orders:
-        order.total = sum(
+        # raw total
+        raw = sum(
             (item.shoe.discounted_price if getattr(item.shoe, 'discount', 0) > 0 else item.price)
             * item.quantity
             for item in order.items.all()
         )
+        # discount
+        if order.discount_code == 'SOLEMATE15':
+            order.discount_amount = (raw * Decimal('0.15')).quantize(Decimal('0.01'))
+        else:
+            order.discount_amount = Decimal('0.00')
+        # final
+        order.raw_total = raw
+        order.total     = (raw - order.discount_amount).quantize(Decimal('0.01'))
+
     return render(request, 'cart/history.html', {'orders': orders})
