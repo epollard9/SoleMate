@@ -15,32 +15,38 @@ class CartItem(models.Model):
         return f"{self.user.username} – {self.shoe.name} (Size {self.size.size_code}) × {self.quantity}"
 
 class Order(models.Model):
-    user       = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='cart_orders'            # ← avoids clash with shop.Order.user
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
+    user          = models.ForeignKey(
+                        User,
+                        on_delete=models.CASCADE,
+                        related_name='cart_orders'
+                    )
+    created_at    = models.DateTimeField(auto_now_add=True)
+    discount_code = models.CharField(
+                        max_length=20,
+                        null=True,
+                        blank=True,
+                        help_text="Code applied at checkout, e.g. SOLEMATE15"
+                    )
 
     def __str__(self):
         return f"Order #{self.id} by {self.user.username} at {self.created_at}"
 
 class OrderItem(models.Model):
     order    = models.ForeignKey(
-        Order,
-        related_name='items',
-        on_delete=models.CASCADE
-    )
+                   Order,
+                   related_name='items',
+                   on_delete=models.CASCADE
+               )
     shoe     = models.ForeignKey(
-        Shoe,
-        on_delete=models.CASCADE,
-        related_name='cart_order_items'
-    )
+                   Shoe,
+                   on_delete=models.CASCADE,
+                   related_name='cart_order_items'
+               )
     size     = models.ForeignKey(
-        Size,
-        on_delete=models.CASCADE,
-        related_name='cart_order_items_by_size'
-    )
+                   Size,
+                   on_delete=models.CASCADE,
+                   related_name='cart_order_items_by_size'
+               )
     quantity = models.PositiveIntegerField()
     price    = models.DecimalField(max_digits=6, decimal_places=2)
 

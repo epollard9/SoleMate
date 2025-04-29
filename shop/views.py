@@ -110,9 +110,9 @@ def edit_shoe_entry(request, id):
                 for value in values:
                     shoe.sizes.add(value)
                     shoe.save()
-        return redirect('shop.seller')
+        return redirect('shop.index')
     else:
-        return redirect('shop.seller')
+        return redirect('shop.index')
 
 
 @login_required
@@ -138,9 +138,9 @@ def create_shoe(request):
                 for value in values:
                     shoe.sizes.add(value)
                     shoe.save()
-        return redirect('shop.seller')
+        return redirect('shop.index')
     else:
-        return redirect('shop.seller')
+        return redirect('shop.index')
 
 @login_required
 def create_review(request, id):

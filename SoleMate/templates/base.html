@@ -1,3 +1,4 @@
+{# /templates/base.html #}
 <!DOCTYPE html>
 <html>
   {% load static %}
@@ -28,6 +29,39 @@
       href="{% static 'css/style.css' %}"
     >
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- AI box & toggle styles -->
+    <style>
+      /* draggable chat box */
+      #aibox {
+        display: none;
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 300px;
+        z-index: 1100;
+        cursor: move;
+      }
+      /* circular shoe‐icon toggle button */
+      #ai-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 3rem;
+        height: 3rem;
+        background: #CBCBCB;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1101;
+      }
+      #ai-toggle i {
+        font-size: 1.2rem;
+        color: #333;
+      }
+    </style>
   </head>
 
   <body
@@ -43,16 +77,17 @@
       style="max-height:80px !important;"
     >
       <div class="container">
-        {% if user.is_authenticated%}
-        <a class="navbar-brand" href="{% url 'news' %}" style="{%if subscribed > 0 %}color: red {%else%}color:black{% endif %}">
+        {% if user.is_authenticated %}
+        <a class="navbar-brand" href="{% url 'news' %}"
+           style="{% if subscribed > 0 %}color: red{% else %}color: black{% endif %}">
           <div id="notification-bell">
-                <i class="fas fa-bell"></i>
-                <span id="notification-count">{{subscribed}}</span>
+            <i class="fas fa-bell"></i>
+            <span id="notification-count">{{ subscribed }}</span>
           </div>
         </a>
         {% endif %}
-         <a class="navbar-brand" href="{% url 'home.index' %}">
-           <div class="banner"><strong> SoleMate</strong></div>
+        <a class="navbar-brand" href="{% url 'home.index' %}">
+          <div class="banner"><strong> SoleMate</strong></div>
         </a>
         <button
           class="navbar-toggler"
@@ -73,32 +108,18 @@
             <a class="nav-link" href="{% url 'home.about' %}">About</a>
             <a class="nav-link bg-dark" href="{% url 'news' %}">News</a>
             <a class="nav-link bg-dark" href="{% url 'shop.index' %}">Shop</a>
-            <!-- Updated the Cart link to use the 'detail' URL name -->
             <a class="nav-link bg-dark" href="{% url 'cart:view_cart' %}">
               Cart{% if cart_item_count > 0 %} ({{ cart_item_count }}){% endif %}
             </a>
             <div style="background-color: black; height: 50px; width:2px; margin-left:10px"></div>
             <div class="vr bg-light mx-2 d-none d-lg-block"></div>
             {% if user.is_authenticated %}
-              <a
-                class="nav-link bg-dark"
-                href="{% url 'accounts.logout' %}"
-              >
+              <a class="nav-link bg-dark" href="{% url 'accounts.logout' %}">
                 Logout ({{ user.username }})
               </a>
             {% else %}
-              <a
-                class="nav-link bg-dark"
-                href="{% url 'accounts.login' %}"
-              >
-                Login
-              </a>
-              <a
-                class="nav-link bg-dark"
-                href="{% url 'accounts.signup' %}"
-              >
-                Sign Up
-              </a>
+              <a class="nav-link bg-dark" href="{% url 'accounts.login' %}">Login</a>
+              <a class="nav-link bg-dark" href="{% url 'accounts.signup' %}">Sign Up</a>
             {% endif %}
             <div class="vr bg-white mx-2 d-none d-lg-block"></div>
           </div>
@@ -110,73 +131,81 @@
       {% block hero %}{% endblock hero %}
       {% block content %}{% endblock content %}
 
-  <div
-    id="aibox"
-    class="card p-3 shadow rounded"
-    style="display:none;"
-  >
-  <div class="d-flex justify-content-between align-items-center mb-2">
-    <h4 class="mb-0">Ask Sole-Mate</h4>
-    <button type="button" class="btn btn-dark btn-sm" onclick="toggleAI()">Close</button>
-  </div>
-  <div class="row">
-    <textarea
-      id="ai-input"
-      class="form-control mb-2"
-      rows="2"
-      placeholder="Hi I am your Sole-Mate"
-    ></textarea>
-    <div class="text-center">
-      <button
-        class="btn bg-dark text-white"
-        onclick="sendAIRequest()"
-      >Ask</button>
-    </div>
-  </div>
-  <div
-    id="ai-response"
-    class="mt-3 border rounded p-2 text-dark bg-light"
-    style="min-height: 50px;"
-  ></div>
-</div>
-
-    
+      <!-- AI chat box -->
+      <div id="aibox" class="card p-3 shadow rounded">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h4 class="mb-0">Ask Sole-Mate</h4>
+          <button type="button" class="btn btn-dark btn-sm" onclick="toggleAI()">Close</button>
+        </div>
+        <div class="row">
+          <textarea
+            id="ai-input"
+            class="form-control mb-2"
+            rows="2"
+            placeholder="Sup! I'm Sole-Mate."
+          ></textarea>
+          <div class="text-center">
+            <button
+              class="btn bg-dark text-white"
+              onclick="sendAIRequest()"
+            >Ask</button>
+          </div>
+        </div>
+        <div
+          id="ai-response"
+          class="mt-3 border rounded p-2 text-dark bg-light"
+          style="min-height: 50px;"
+        ></div>
+      </div>
 
       <footer>
         {% if user.is_authenticated %}
-          <div
-            class="button-corner"
-            style="float:right"
-          >
-            <button
-              class="button-corner"
-              onclick="toggleAI()"
-            >AI Assistant</button>
-          </div>
+        <div id="ai-toggle" onclick="toggleAI()" title="AI Assistant">
+          <i class="fas fa-shoe-prints"></i>
+        </div>
         {% endif %}
       </footer>
     </div>
 
     <script>
-      let showingAI = false;
-      function toggleAI(){
+      function toggleAI() {
         const box = document.getElementById("aibox");
-        showingAI = !showingAI;
-        box.style.display = showingAI ? "block" : "none";
+        box.style.display = box.style.display === "block" ? "none" : "block";
       }
+
+      // simple drag‐to‐move
+      (function(){
+        const box = document.getElementById("aibox");
+        let dragging = false, offsetX = 0, offsetY = 0;
+        box.addEventListener("mousedown", e => {
+          dragging = true;
+          const rect = box.getBoundingClientRect();
+          offsetX = e.clientX - rect.left;
+          offsetY = e.clientY - rect.top;
+          document.body.style.userSelect = "none";
+        });
+        document.addEventListener("mousemove", e => {
+          if (!dragging) return;
+          box.style.left = (e.clientX - offsetX) + "px";
+          box.style.top  = (e.clientY - offsetY) + "px";
+        });
+        document.addEventListener("mouseup", () => {
+          dragging = false;
+          document.body.style.userSelect = "";
+        });
+      })();
+
       function getCSRFToken() {
-        const name = "csrftoken";
-        for (let cookie of document.cookie.split(';')) {
-          let c = cookie.trim();
-          if (c.startsWith(name + '=')) {
-            return decodeURIComponent(c.substring(name.length + 1));
-          }
-        }
-        return '';
+        return document.cookie.split(';')
+          .map(c => c.trim())
+          .find(c => c.startsWith("csrftoken="))
+          ?.split('=')[1] || '';
       }
+
       async function sendAIRequest() {
-        const input = document.getElementById("ai-input").value;
+        const input = document.getElementById("ai-input").value.trim();
         const responseDiv = document.getElementById("ai-response");
+        if (!input) return;
         responseDiv.innerHTML = "Thinking...";
         try {
           const res = await fetch("/ai/chat/", {
@@ -188,8 +217,8 @@
             body: JSON.stringify({ prompt: input })
           });
           if (!res.ok) throw new Error("Server error");
-          const data = await res.json();
-          responseDiv.innerHTML = "<strong>SOLE-MATE:</strong> " + data.response;
+          const { response } = await res.json();
+          responseDiv.innerHTML = "<strong>SOLE-MATE:</strong> " + response;
         } catch (err) {
           responseDiv.innerHTML = "<strong>Error:</strong> " + err.message;
         }
