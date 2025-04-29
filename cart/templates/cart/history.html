@@ -44,7 +44,7 @@
                 {# Discount row, if any #}
                 {% if order.discount_amount > 0 %}
                 <tr>
-                  <td colspan="4" class="text-end text-success">Discount (15%):</td>
+                  <td colspan="4" class="text-end text-success">Discount:</td>
                   <td class="text-end text-success">−${{ order.discount_amount|floatformat:2 }}</td>
                 </tr>
                 {% endif %}

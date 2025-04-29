@@ -184,7 +184,11 @@ def completed(request, order_id):
 
     # 2) figure discount amount & final total
     discount_amount = Decimal('0.00')
-    discount = Discount.objects.filter(discount_code__icontains=order.discount_code).values_list('discount_percent', flat=True)[0]
+    discount = Discount.objects.filter(discount_code__icontains=order.discount_code)
+    if (discount):
+        discount = discount.values_list('discount_percent', flat=True)[0]
+    else:
+        discount= Decimal('0.00')
     discount_amount = (raw_total * discount).quantize(Decimal('.01'))
     final_total = (raw_total - discount_amount).quantize(Decimal('0.01'))
 
@@ -220,8 +224,14 @@ def history(request):
             for item in order.items.all()
         )
         # discount
-        if order.discount_code == 'SOLEMATE15':
-            order.discount_amount = (raw * Decimal('0.15')).quantize(Decimal('0.01'))
+        if (order.discount_code):
+            discount = Discount.objects.filter(discount_code__icontains=order.discount_code)
+            if (discount):
+                discount = discount.values_list('discount_percent', flat=True)[0]
+                order.discount_amount = (raw * discount).quantize(Decimal('0.01'))
+            else:
+                discount = Decimal('0.00')
+                order.discount_amount = Decimal('0.00')
         else:
             order.discount_amount = Decimal('0.00')
         # final
