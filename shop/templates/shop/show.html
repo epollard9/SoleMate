@@ -136,9 +136,6 @@
               </h5>
               <p>{{ review.comment }}</p>
               {% if user.is_authenticated and user == review.user %}
-                <a class="btn btn-sm btn-outline-primary" href="{% url 'shop.edit_review' id=template_data.shoe.shoe_number review_id=review.id %}">
-                  Edit
-                </a>
                 <a class="btn btn-sm btn-outline-danger" href="{% url 'shop.delete_review' id=template_data.shoe.shoe_number review_id=review.id %}">
                   Delete
                 </a>
