@@ -6,7 +6,7 @@ from django.urls                   import reverse
 from django.contrib.auth.decorators import login_required
 
 from .models                       import CartItem, Order, OrderItem
-from shop.models                   import Shoe, Size
+from shop.models                   import Shoe, Size, Discount
 
 def detail(request):
     """Show cart for both logged-in users and guests."""
@@ -119,7 +119,7 @@ def checkout(request):
         # create order + items
         order = Order.objects.create(
             user=request.user,
-            discount_code=(code if code == 'SOLEMATE15' else None)
+            discount_code=(code if code not in Discount.objects.all().values() else None)
         )
         for ci in cart_items:
             OrderItem.objects.create(
@@ -184,8 +184,12 @@ def completed(request, order_id):
 
     # 2) figure discount amount & final total
     discount_amount = Decimal('0.00')
-    if order.discount_code == 'SOLEMATE15':
-        discount_amount = (raw_total * Decimal('0.15')).quantize(Decimal('0.01'))
+    discount = Discount.objects.filter(discount_code__icontains=order.discount_code)
+    if (discount):
+        discount = discount.values_list('discount_percent', flat=True)[0]
+    else:
+        discount= Decimal('0.00')
+    discount_amount = (raw_total * discount).quantize(Decimal('.01'))
     final_total = (raw_total - discount_amount).quantize(Decimal('0.01'))
 
     # 3) pass into template
@@ -220,8 +224,14 @@ def history(request):
             for item in order.items.all()
         )
         # discount
-        if order.discount_code == 'SOLEMATE15':
-            order.discount_amount = (raw * Decimal('0.15')).quantize(Decimal('0.01'))
+        if (order.discount_code):
+            discount = Discount.objects.filter(discount_code__icontains=order.discount_code)
+            if (discount):
+                discount = discount.values_list('discount_percent', flat=True)[0]
+                order.discount_amount = (raw * discount).quantize(Decimal('0.01'))
+            else:
+                discount = Decimal('0.00')
+                order.discount_amount = Decimal('0.00')
         else:
             order.discount_amount = Decimal('0.00')
         # final

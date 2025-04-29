@@ -19,7 +19,7 @@
             <dd class="col-sm-6">${{ raw_total|floatformat:2 }}</dd>
 
             {% if discount_amount > 0 %}
-              <dt class="col-sm-6 text-success">Discount (15%):</dt>
+              <dt class="col-sm-6 text-success">Discount:</dt>
               <dd class="col-sm-6 text-success">−${{ discount_amount|floatformat:2 }}</dd>
             {% endif %}
 

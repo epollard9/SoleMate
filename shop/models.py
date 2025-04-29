@@ -72,3 +72,10 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.shoe.shoe_number} ({self.rating}/5)"
+
+class Discount(models.Model):
+    discount_code = models.CharField(max_length=10, primary_key=True)
+    discount_percent = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return self.discount_code

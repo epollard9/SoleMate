@@ -30,13 +30,13 @@ def index(request):
     price_term = request.GET.get('priceFilter')
     shoes = Shoe.objects.all()
     if search_term:
-        shoes = Shoe.objects.filter(name__icontains=search_term)
+        shoes = shoes.filter(name__icontains=search_term)
     if size_term:
-        shoes = Shoe.objects.filter(sizes__size_code=size_term)
+        shoes = shoes.filter(sizes__size_code=size_term)
     if brand_term:
-        shoes = Shoe.objects.filter(brand__icontains=brand_term)
+        shoes = shoes.filter(brand__icontains=brand_term)
     if price_term:
-        shoes = Shoe.objects.filter(price__lte=price_term)
+        shoes = shoes.filter(price__lte=price_term)
 
     template_data = {}
     template_data['title'] = 'Shoes'
@@ -72,7 +72,7 @@ def show(request, id):
     template_data = {
         'title': shoe.name,
         'shoe': shoe,
-        'sizes': Size.objects.all(),
+        'sizes': Size.objects.all().order_by('size_code'),
         'reviews': reviews,
         'youtube_video_url': video_url,
         'seller': seller,

@@ -40,41 +40,59 @@
         <div class="col mx-auto mb-3">
           <h2>Filters</h2>
           <hr />
-          <p class="card-text">
           <form method="GET">
-            <fieldset id="size">
-              <legend>Size:</legend>
-              {% for size in template_data.sizes %}
-              <input type="radio" id="{{size}}" name="sizeFilter" value="{{size}}"><label for="{{size}}">{{size}}</label><br>
-              {% endfor %}
-            </fieldset>
-          <fieldset id ="price">
-            <legend>Price:</legend>
-            <input type="radio" id="20" name="priceFilter" value="20"><label for="20"> < $20</label><br>
-            <input type="radio" id="40" name="priceFilter" value="40"><label for="40"> < $40</label><br>
-            <input type="radio" id="60" name="priceFilter" value="60"><label for="60"> < $60</label><br>
-            <input type="radio" id="80" name="priceFilter" value="80"><label for="80"> < $80</label><br>
-            <input type="radio" id="100" name="priceFilter" value="100"><label for="100"> < $100</label><br>
-          </fieldset>
-          <fieldset id="brand">
-            <legend>Brand:</legend>
-            {% for brand in template_data.brands %}
-            <div class="row">
-              <span>
-                <input type="checkbox" id={{brand}} name="brandFilter" value={{brand}}> <label for={{brand}}> {{brand}}</label>
-              </span>
+            <!-- SIZE -->
+            <details open>
+              <summary><strong>Size</strong></summary>
+              <div>
+                {% for size in template_data.sizes %}
+                  <div>
+                    <input type="radio" id="{{size}}" name="sizeFilter" value="{{size}}">
+                    <label for="{{size}}">{{size}}</label>
+                  </div>
+                {% endfor %}
+              </div>
+            </details>
+      
+            <!-- PRICE -->
+            <details>
+              <summary><strong>Price</strong></summary>
+              <div>
+                <input type="radio" id="20" name="priceFilter" value="20"><label for="20">Under $20</label><br>
+                <input type="radio" id="40" name="priceFilter" value="40"><label for="40">Under $40</label><br>
+                <input type="radio" id="60" name="priceFilter" value="60"><label for="60">Under $60</label><br>
+                <input type="radio" id="80" name="priceFilter" value="80"><label for="80">Under $80</label><br>
+                <input type="radio" id="100" name="priceFilter" value="100"><label for="100">Under $100</label><br>
+              </div>
+            </details>
+      
+            <!-- BRAND -->
+            <details>
+              <summary><strong>Brand</strong></summary>
+              <div>
+                {% for brand in template_data.brands %}
+                  <div>
+                    <input type="checkbox" id="{{brand}}" name="brandFilter" value="{{brand}}">
+                    <label for="{{brand}}">{{brand}}</label>
+                  </div>
+                {% endfor %}
+              </div>
+            </details>
+      
+            <!-- BUTTONS -->
+            <div class="d-flex gap-2 mt-3">
+              <button type="submit" class="btn btn-dark btn-sm">Apply</button>
+              <a href="{% url 'shop.index' %}" class="btn btn-outline-secondary btn-sm">Clear</a>
             </div>
-          {% endfor %}
-          </fieldset>
-          <input type="submit" value="Search">
           </form>
-          </p>
+      
           {% if user.is_authenticated %}
-            <a href="{% url 'shop.sell' %}" class="btn btn-explore mt-4" style="border-width: 1px;border-color: black"> Sell shoe</a>
-            <a href="{% url 'shop.my_listings' %}" class="btn btn-explore mt-4" style="border-width: 1px;border-color: black"> My listings</a>
+            <a href="{% url 'shop.sell' %}" class="btn btn-outline-dark mt-4">Sell shoe</a><br />
+            <a href="{% url 'shop.my_listings' %}" class="btn btn-outline-dark mt-2">My listings</a>
           {% endif %}
         </div>
       </div>
+      
     </div>
     <div class="content" style=" min-height:70vh; max-height:100vh; overflow-y: scroll !important; overflow-x:hidden; padding-left: 10px !important; padding-right: 10px !important;" >
       <h2>
