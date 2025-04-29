@@ -39,11 +39,11 @@ def signup(request):
         form = CustomUserCreationForm(request.POST, error_class=CustomErrorList)
         if form.is_valid():
             user = form.save()
-            # Update user type on profile
             profile = user.userprofile
-            profile.user_type = form.cleaned_data['user_type']
+            profile.user_type = 'enthusiast'  # <-- Set manually
             profile.save()
             return redirect('accounts.login')
+
         else:
             template_data['form'] = form
             return render(request, 'accounts/signup.html', {'template_data': template_data})
