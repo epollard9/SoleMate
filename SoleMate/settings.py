@@ -48,6 +48,7 @@ TEMPLATES = [
 
                 #custom processor
                 'shop.context_processors.subscribed',
+                'cart.context_processors.cart_item_count',
             ],
         },
     },

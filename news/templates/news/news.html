@@ -11,34 +11,34 @@
 
 
 
-<!-- Subscribed Shoes Section -->
-{% if subscribed_shoes %}
-<section class="py-5">
-  <div class="container">
-    <h2 class="mb-4">Your Subscribed Shoes</h2>
-    <div class="row g-4">
-      {% for shoe in subscribed_shoes %}
-      <div class="col-md-4">
-        <a href="{% url 'shop.show' id=shoe.shoe_number %}" class="text-decoration-none text-dark">
-          <div class="card h-100 shadow-sm border-primary"
-            style="background-image: url('{% if shoe.image %}{{ shoe.image.url }}{% else %}{% static 'img/coming-soon.png' %}{% endif %}');
-                   background-size: cover;
-                   background-position: center;
-                   background-repeat: no-repeat;
-                   border-radius: 12px;
-                   overflow: hidden;">
-            <div class="card-body d-flex flex-column justify-content-end" style="background-color: rgba(0,0,0,0.5);">
-              <h5 class="card-title text-white mt-2">{{ shoe.name }}</h5>
-              <p class="text-white">{{ shoe.release_date }}</p>
+  <!-- Subscribed Shoes Section -->
+  {% if subscribed_shoes %}
+  <section class="py-5">
+    <div class="container">
+      <h2 class="mb-4">Your Subscribed Shoes</h2>
+      <div class="row g-4">
+        {% for shoe in subscribed_shoes %}
+        <div class="col-md-4">
+          <a href="{% url 'shop.show' id=shoe.shoe_number %}" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm border-primary"
+              style="background-image: url('{% if shoe.image %}{{ shoe.image.url }}{% else %}{% static 'img/coming-soon.png' %}{% endif %}');
+                     background-size: cover;
+                     background-position: center;
+                     background-repeat: no-repeat;
+                     border-radius: 12px;
+                     overflow: hidden;">
+              <div class="card-body d-flex flex-column justify-content-end" style="background-color: rgba(0,0,0,0.5);">
+                <h5 class="card-title text-white mt-2">{{ shoe.name }}</h5>
+                <p class="text-white">{{ shoe.release_date }}</p>
+              </div>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
+        {% endfor %}
       </div>
-      {% endfor %}
     </div>
-  </div>
-</section>
-{% endif %}
+  </section>
+  {% endif %}
 
 
 <!-- Upcoming Sneaker Releases Section -->

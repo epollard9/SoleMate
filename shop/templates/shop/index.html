@@ -58,10 +58,10 @@
           </fieldset>
           <fieldset id="brand">
             <legend>Brand:</legend>
-            {% for shoe in template_data.brands %}
+            {% for brand in template_data.brands %}
             <div class="row">
               <span>
-                <input type="checkbox" id={{shoe.brand}} name="brandFilter" value={{shoe.brand}}> <label for={{shoe.brand}}> {{shoe.brand}}</label>
+                <input type="checkbox" id={{brand}} name="brandFilter" value={{brand}}> <label for={{brand}}> {{brand}}</label>
               </span>
             </div>
           {% endfor %}
@@ -69,14 +69,21 @@
           <input type="submit" value="Search">
           </form>
           </p>
+          {% if user.is_authenticated %}
+            <a href="{% url 'shop.sell' %}" class="btn btn-explore mt-4" style="border-width: 1px;border-color: black"> Sell shoe</a>
+            <a href="{% url 'shop.my_listings' %}" class="btn btn-explore mt-4" style="border-width: 1px;border-color: black"> My listings</a>
+          {% endif %}
         </div>
       </div>
     </div>
     <div class="content" style=" min-height:70vh; max-height:100vh; overflow-y: scroll !important; overflow-x:hidden; padding-left: 10px !important; padding-right: 10px !important;" >
       <h2>
         <div class="navbar-nav ms-auto navbar-ml">
-           <a class="nav-link" href="{% url 'shop.index' %}">Brand Shoes</a>
-           <a class="nav-link" href="{% url 'shop.seller' %}">Member Shoes</a>
+          <div class="row">
+            <span>
+                Shop
+            </span>
+          </div>
         </div>
       </h2>
       <div class = "row">
