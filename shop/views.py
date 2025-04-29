@@ -72,7 +72,7 @@ def show(request, id):
     template_data = {
         'title': shoe.name,
         'shoe': shoe,
-        'sizes': Size.objects.all(),
+        'sizes': Size.objects.all().order_by('size_code'),
         'reviews': reviews,
         'youtube_video_url': video_url,
         'seller': seller,
